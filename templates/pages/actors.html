@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% block title %}Casting Agency | Actors{% endblock %}
+{% block actors %}
+<b></b>
+<ul class="items">
+	{% for actor in actors %}
+	<li>
+		<a href="/actors/{{ actor.id }}">
+			<i class="fas fa-users"></i>
+			<div class="item">
+				<h5>{{ actor.name }}</h5>
+			</div>
+		</a>
+	</li>
+	<button style="-webkit-appearance: none; float: right; cursor: pointer;" class ="editArtist-button"> <i  data-id="{{ artist.id }}" class="fa fa-edit"></i></button>
+	{% endfor %}
+</ul>
+{% endblock %}
