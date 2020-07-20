@@ -1,4 +1,4 @@
-# Coffee Shop Backend
+# Casting Agency App
 
 ## Getting Started
 
@@ -93,18 +93,41 @@ The `--reload` flag will detect file changes and restart the server automaticall
 8. Log in auth0 to get the token for all users by accessing the following url with your details of the app:
 `https://{{YOUR_DOMAIN}}/authorize?audience={{API_IDENTIFIER}}&response_type=token&client_id={{YOUR_CLIENT_ID}}&redirect_uri={{YOUR_CALLBACK_URI}}`
 
-    Application Login URI: https://127.0.0.1:4200/login
-    Allowed Callback URLs: http://127.0.0.1:4200/tabs/user-page
-    Allowed Logout URLs: https://127.0.0.1:4200/logout
 
 
 
 ### Implement The Server
 
-There are `@TODO` comments throughout the `./backend/src`. We recommend tackling the files in order and from top to bottom:
+## Authentication
 
-1. `./src/auth/auth.py`
-2. `./src/api.py`
+The API has three registered users:
+
+1. Assistant
+
+```
+email: 
+password: 
+```
+
+2. Director
+
+```
+email: 
+password: 
+```
+
+3. Producer
+
+```
+email: 
+password: 
+```
+
+The Auth0 domain and api audience can be found in `setup.sh`.
+
+## Tests
+
+To run the tests, run `py tests.py`.
 
 Install autopep8 for formatting the code in api.py
     pip install --upgrade autopep8
