@@ -1,4 +1,7 @@
 # Casting Agency App
+Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies.
+
+Hosted on heroku. [Link](https://vr-casting-agency.herokuapp.com/).
 
 ## Getting Started
 
@@ -112,8 +115,8 @@ password:
 2. Director
 
 ```
-email: 
-password: 
+email: vrotaru@mastercontrol.com
+password: !!Password!!
 ```
 
 3. Producer
