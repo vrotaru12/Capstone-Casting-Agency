@@ -1,71 +1,33 @@
 # Casting Agency App
-Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies.
+Casting Agency is an app that is responsible for creating movies, adding actors and assigning them to those movies. 
+This is my capstone project for the Udacity Full Stack Web Developer nanodegree.
 
 Hosted on heroku. [Link](https://vr-casting-agency.herokuapp.com/).
-
 ## Getting Started
 
 ### Installing Dependencies
 
-#### Python 3.7
-
-Follow instructions to install the latest version of python for your platform in the [python docs](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python)
-
-#### Virtual Enviornment
-
-We recommend working within a virtual environment whenever using Python for projects. This keeps your dependencies for each project separate and organaized. Instructions for setting up a virual enviornment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
-pip install virtualenv
-py -m venv env
-./env/Scripts/activate
-
 #### PIP Dependencies
 
-Once you have your virtual environment setup and running, install dependencies by naviging to the `/backend` directory and running:
+All dependencies are already listed in the `requirements.txt` file. 
 
 ```bash
 pip install -r requirements.txt
 ```
 
-This will install all of the required packages we selected within the `requirements.txt` file.
+This will install all of the required packages within the `requirements.txt` file.
 
-##### Key Dependencies
-
-- [Flask](http://flask.pocoo.org/)  is a lightweight backend microservices framework. Flask is required to handle requests and responses.
-
-- [SQLAlchemy](https://www.sqlalchemy.org/) and [Flask-SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) are libraries to handle the lightweight sqlite database. Since we want you to focus on auth, we handle the heavy lift for you in `./src/database/models.py`. We recommend skimming this code first so you know how to interface with the Drink model.
-
-- [jose](https://python-jose.readthedocs.io/en/latest/) JavaScript Object Signing and Encryption for JWTs. Useful for encoding, decoding, and verifying JWTS.
-
-## Running the server
-
-From within the `./src` directory first ensure you are working using your created virtual environment.
-
-Each time you open a new terminal session, run:
-
-```bash
-export FLASK_APP=api.py;
-```
-
-To run the server, execute:
-
-```bash
-FLASK_APP=app.py FLASK_DEBUG=true flask run
-```
-
-The `--reload` flag will detect file changes and restart the server automatically.
-
-## Tasks
-
+## Authentication
 ### Setup Auth0
-
-1. Create a new Auth0 Account
-2. Select a unique tenant domain
-3. Create a new, single page web application
-4. Create a new API
+In order to create 3 different roles that will log into the app, the following configurations were applied:
+1. A new Auth0 Account was created
+2. A unique tenant domain was selected
+3. A new, single page web application was created
+4. A new API was created 
     - in API Settings:
-        - Enable RBAC
-        - Enable Add Permissions in the Access Token
-5. Create new API permissions:
+        - Enabled RBAC
+        - Enabled Add Permissions in the Access Token
+5. New API with the following permissions:
     - `get:actors`
     - `get:actor-detail`
     - `post:actors`
@@ -75,67 +37,248 @@ The `--reload` flag will detect file changes and restart the server automaticall
     - `post:movie`
     - `patch:movie`
     - `delete:movie`
-6. Create new roles for:
+6. New roles were created
     - Casting Assistant
       - Can view actors and movies
+        - `get:actors`
+        - `get:actor-detail`
+        - `post:actors`
+      ```
+      email: gurdisfilea@gmail.com
+      password: !!!!Valerica!!
+      ```
     - Casting Director
       - All permissions a Casting Assistant has and…
       - Add or delete an actor from the database
       - Modify actors or movies
+        - `get:actors`
+        - `get:actor-detail`
+        - `post:actors`
+        - `patch:actors`
+        - `delete:actors`
+        - `get:movie`
+        - `post:movie`
+        - `patch:movie`
+        - `delete:movie`
+      ```
+      email: vrotaru@mastercontrol.com
+      password: !!Password!!
+      ```
     - Executive Producer
       - All permissions a Casting Director has and…
       - Add or delete a movie from the database
+        - `get:actors`
+        - `get:actor-detail`
+        - `post:actors`
+        - `delete:actors`
+        - `get:movie`
+        - `post:movie`
+        - `delete:movie`
+      ```
+      email: gurdisvaleriu@gmail.com
+      password: !!!!Password12
+      ```
 7. Test your endpoints with [Postman](https://getpostman.com). 
-    - Register 3 users/more - assign the Casting Assistant role to one, Casting Director role to the other and Executive Producer role to somebody else.
-    - Sign into each account and make note of the JWT.
-    - Import the postman collection `./starter_code/backend/udacity-fsnd-udaspicelatte.postman_collection.json`
-    - Right-clicking the collection folder for barista and manager, navigate to the authorization tab, and including the JWT in the token field (you should have noted these JWTs).
-    - Run the collection and correct any errors.
-    - Export the collection overwriting the one we've included so that we have your proper JWTs during review!
-
-8. Log in auth0 to get the token for all users by accessing the following url with your details of the app:
-`https://{{YOUR_DOMAIN}}/authorize?audience={{API_IDENTIFIER}}&response_type=token&client_id={{YOUR_CLIENT_ID}}&redirect_uri={{YOUR_CALLBACK_URI}}`
 
 
+## Endpoints
 
+### `GET /movies`
 
-### Implement The Server
+Gets all movies from the db.
 
-## Authentication
+Response:
 
-The API has three registered users:
-
-1. Assistant
-
-```
-email: 
-password: 
-```
-
-2. Director
-
-```
-email: vrotaru@mastercontrol.com
-password: !!Password!!
+```json5
+{
+  "movies": [
+    {
+      "id": 1,
+      "release_date": "02-02-2020",
+      "title": "Catch me if you can"
+    },
+    {
+      "id": 2,
+      "title": "Test Title",
+      "release_date": "09-10-20",
+    }
+  ],
+  "success": true
+}
 ```
 
-3. Producer
+### `POST /movies`
 
-```
-email: 
-password: 
+Adds a new movie to the db.
+
+Data:
+
+```json5
+{
+  "title": "Test title",
+  "release_date": "09-10-20"
+}
 ```
 
-The Auth0 domain and api audience can be found in `setup.sh`.
+Response:
+
+```json5
+{
+  "movies": [
+    {
+      "id": 3,
+      "title": "Test title"
+    }
+  ],
+  "success": true
+}
+```
+
+### `PATCH /movies/<int:id>`
+
+Edit data on a movie in the db.
+
+Data:
+
+```json5
+{
+  "title": "test patch"
+}
+```
+
+Response:
+
+```json5
+{
+  "movies": [
+    {
+      "id": 3,
+      "title": "test patch"
+    }
+  ],
+  "success": true
+}
+```
+
+### `DELETE /movies/<int:id>`
+
+Delete a movie from the db.
+
+Response:
+
+```json5
+{
+  "success": true,
+  "delete": 1
+}
+```
+
+### `GET /actor-details`
+
+Gets all actors from the db.
+
+Response:
+
+```json5
+{
+  "actors": [
+    {
+      "id": 1,
+      "name": "Test",
+      "age": 32,
+      "gender": "Test"
+    }
+  ],
+  "success": true
+}
+```
+
+### `GET /actors`
+
+Gets all actors from the db with less details.
+
+Response:
+
+```json5
+{
+  "actors": [
+    {
+      "id": 1,
+      "name": "Test",
+    }
+  ],
+  "success": true
+}
+```
+
+### `POST /actors`
+
+Adds a new actor to the db.
+
+Data:
+
+```json5
+{
+  "name": "Test",
+  "age": 10,
+  "gender": "Test"
+}
+```
+
+Response:
+
+```json5
+{
+  "success": true,
+  "actors": [
+    {
+      "id": 2,
+      "name": "Test",
+    }
+  ],
+}
+```
+
+### `PATCH /actors/<int:id>`
+
+Edit data on a actor in the db.
+
+Data:
+
+```json5
+{
+  "name": "test patch",
+}
+```
+
+Response:
+
+```json5
+{
+  "success": true,
+  "actors": [
+    {
+      "id": 2,
+      "name": "Test",
+      "age": 10,
+      "gender": "M"
+    }
+  ],
+}
+```
+
+### `DELETE /actors/<int:id>`
+
+Delete an actor from the db.
+
+Response:
+
+```json5
+{
+  "success": true,
+  "delete": 1
+}
+```
 
 ## Tests
-
 To run the tests, run `py tests.py`.
-
-Install autopep8 for formatting the code in api.py
-    pip install --upgrade autopep8
-   command: autopep8 --in-place --aggressive --aggressive <filename>
-
-Install pycodestyle for checking if there are any style mistakes in the code:
-    pip install pycodestyle
-    command: pycodestyle --first <filename>
