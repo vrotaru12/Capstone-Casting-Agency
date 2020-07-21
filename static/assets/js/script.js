@@ -20,22 +20,29 @@ if (tokenUrl) {
       message: e,
     });
   }
+}else{
+  document.getElementById('LogOutbutton').remove();
 }
 
 
 
 function getTokenResponse(){
-  var myHeaders = new Headers();
-  myHeaders.append("Authorization", "Bearer "+token);
-
-  var requestOptions = {
-    method: 'GET',
-    headers: myHeaders,
-    redirect: 'follow'
+  var settings = {
+    "url": "/movies",
+    "method": "GET",
+    "timeout": 0,
+    "headers": {
+      "Authorization": "Bearer "+token
+    },
   };
-
-  fetch("/movies", requestOptions)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
+  
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+  });
 }
+
+
+const logOut = () => {
+  localStorage.clear()
+  window.location.href = 'https://vrdev.auth0.eu.com/v2/logout'
+};
