@@ -1,10 +1,12 @@
 import json
-from flask import Flask, render_template, request, Response, flash, redirect, url_for, jsonify, abort
+from flask import Flask, render_template, request, Response
+from flask import flash, redirect, url_for, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import Form
 from models import Movie, Cast, Actor, db_drop_and_create_all, setup_db
 from auth.auth import AuthError, requires_auth
 from flask_cors import CORS
+import os
 
 
 def create_app(test_config=None):
@@ -28,7 +30,7 @@ def create_app(test_config=None):
         return response
 
     '''
-  !! NOTE THIS WILL START YOUR DB FROM SCRATCH
+  !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
   !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
   '''
 
@@ -54,8 +56,6 @@ def create_app(test_config=None):
             'success': True,
             'actors': [actor.short() for actor in actors]
         }), 200
-        # data = [actor.short() for actor in actors]
-        # return render_template('pages/actors.html', actors=data)
 
     '''
   @HERE implementing endpoint
@@ -70,11 +70,9 @@ def create_app(test_config=None):
             abort(404)
 
         return jsonify({
-          'success': True,
-          'actors': [actor.details() for actor in actors]
+            'success': True,
+            'actors': [actor.details() for actor in actors]
         }), 200
-        # data = [actor.details() for actor in actors]
-        # return render_template('pages/actors.html', actors=data)
 
     '''
   @HERE implementing endpoint
@@ -89,11 +87,9 @@ def create_app(test_config=None):
             abort(404)
 
         return jsonify({
-          'success': True,
-          'movies': [movie.short() for movie in movies]
+            'success': True,
+            'movies': [movie.short() for movie in movies]
         }), 200
-        # data = [movie.short() for movie in movies]
-        # return render_template('pages/movies.html', movies=data)
 
     # '''
     # @HERE implementing endpoint
@@ -262,10 +258,20 @@ def create_app(test_config=None):
             "error": 401,
             "message": "Unauthorized"
         }), 401
+
+    @app.errorhandler(AuthError)
+    def auth_error(error):
+        return jsonify({
+            "success": False,
+            "error": error.status_code,
+            "message": error.error
+        }), error.status_code
+
     return app
 
 
 app = create_app()
+app.secret_key = os.getenv('SECRET')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
