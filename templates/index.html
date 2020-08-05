@@ -25,7 +25,7 @@
 							</ul>
 						</li>
 						<li><a id="LogInbutton" href="https://vrdev.eu.auth0.com/authorize?audience=MovieCastApp&response_type=token&client_id=nufEsETO2W43Bo42Ai7YzNdsp7woWbmP&redirect_uri=https://vr-casting-agency.herokuapp.com/" class="button primary">Log in</a></li>
-						<li><a id="LogOutbutton" href="#" class="button primary">Log out</a></li>
+						<li><a id="LogOutbutton" onclick="logOutSession()" class="button primary">Log out</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -45,10 +45,6 @@
 								<ul>
 									<li><a id="addMovie" href="#" class="button m-button" data-target="#actorAdd">Add Movie</a></li>
 									<li><a id="addActor" href="#" class="button m-button" data-target="#movieAdd">Add Actor</a></li>
-									<!-- <li><a id="editActor" href="#" class="button m-button" data-target="#actoredit">Edit Actor</a></li>
-									<li><a id="editMovie" href="#" class="button m-button" data-target="#amovieedit">Edit Movie</a></li>
-									<li><a id="deleteActor" href="#" class="button m-button" data-target="#actordelete">Delete Actor</a></li>
-									<li><a id="deleteMovie" href="#" class="button m-button" data-target="#moviedelete">Delete Movie</a></li> -->
 								</ul>
 							</nav>
 						</header>
@@ -112,9 +108,6 @@
 			<script src="static/assets/js/breakpoints.min.js"></script>
 			<script src="static/assets/js/main.js"></script>
 			<script src="{{ url_for('static', filename='assets/js/script.js') }}"></script>
-			<!-- <script src="static/assets/js/script.js"></script>
-			<script src="https://cdn.auth0.com/js/auth0-spa-js/1.0/auth0-spa-js.production.js"></script>
-			<script src="https://cdn.auth0.com/js/auth0/9.11/auth0.min.js"></script> -->
-
+			 <!-- <script src="static/assets/js/script.js"></script> -->
 	</body>
 </html>
