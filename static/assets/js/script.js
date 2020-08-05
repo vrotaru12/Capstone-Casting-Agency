@@ -39,7 +39,7 @@ function getMovies(){
 
 function getActors(){
   $.ajax({
-    url: '/actors-detail',
+    url: '/actors',
     type: 'GET',
     contentType: 'application/json',
     headers: {
@@ -61,10 +61,10 @@ function logOutSession(){
 }
 
 function addMovie(){
-  let dataSend = {
-    "title": "Vixic Test",
-    "release_date": "03/08/2020"
-  }
+  let post_data = {
+    'title': 'Test Movie',
+    'release_date': '10-10-2018'
+  };
   $.ajax({
     url: '/movies',
     type: 'POST',
@@ -73,7 +73,7 @@ function addMovie(){
        'Authorization': 'Bearer '+tokenUrl[1]
     },
     dataType: 'json',
-    data: JSON.stringify(dataSend),
+    data: JSON.stringify(post_data),
     success: function (result) {
         console.log(result)
     },
