@@ -6,32 +6,32 @@ if (tokenUrl) {
   // get permissions from token
   let permissions;
   permissions = JSON.parse(atob(tokenUrl[1].split('.')[1])).permissions;
+  localStorage.setItem('permissions', permissions);
   profilechange(permissions);
   if(permissions.includes("get:movie") && permissions.includes("get:actor-detail")){
     document.getElementById('LogInbutton').remove();
-  }
-  if(permissions.includes("post:movie") && permissions.includes("post:actor")){
-    // addMovie();
-    // addActors();
   }
 }else{
   document.getElementById('LogOutbutton').remove();
   document.getElementById('getActors').remove();
   document.getElementById('getMovies').remove();
+  document.getElementById('addMovie').remove();
+  document.getElementById('addActor').remove();
 }
 
 
 function profilechange(permission){
-  let node = document.createElement("LI"),textnode = document.createTextNode("Casting Director");
+  let node = document.createElement("LI"), textnode = document.createTextNode("Casting Director");
   if(permission.includes("patch:movie") && permission.includes("patch:actor")){
     document.getElementById('aboutUsbutton').remove();
     document.getElementById('contactButton').remove();
     document.getElementById("profileImage").src = "static/images/pic01-.jpg";
     
     node.appendChild(textnode); 
-    document.getElementById('nav').children[0].insertBefore(node,document.getElementById('nav').children[0].children[3]);
-    document.getElementById('nav').children[0].children[3].style.fontFamily = 'Comic Sans MS';
-    document.getElementById('nav').children[0].children[3].style.fontStyle = 'italic';
+    document.getElementById('nav').children[0].insertBefore(node,document.getElementById('nav').children[0].children[5]);
+    document.getElementById('nav').children[0].children[5].style.fontFamily = 'Comic Sans MS';
+    document.getElementById('nav').children[0].children[5].style.fontStyle = 'italic';
+    document.getElementById('nav').children[0].children[5].style.fontSize = '18px';
 
   }else if(permission.includes("post:movie") && permission.includes("post:actor") 
   && !permission.includes("patch:actor") && !permission.includes("patch:movie")){
@@ -40,6 +40,9 @@ function profilechange(permission){
 }
 
 function getMovies(){
+  document.getElementById("banner").children[0].children[0].remove();
+  document.getElementById("banner").children[0].children[0].remove();
+  
   $.ajax({
     url: '/movies',
     type: 'GET',
@@ -48,7 +51,10 @@ function getMovies(){
        'Authorization': 'Bearer '+tokenUrl[1]
     },
     success: function (result) {
-        console.log(result)
+        allMovies = result.movies;
+        for(let i=0; i<allMovies.length; i++){
+          displayData(allMovies[i].title, "This is description",  "static/images/pic01--.jpg");
+        }
     },
     error: function (error) {
       console.log(error)
@@ -57,7 +63,44 @@ function getMovies(){
   
 }
 
+
+function displayData(MovieName,description, src){
+  let header = document.createElement("header"),
+
+  heading = document.createElement("h2"),
+  hed = document.createTextNode(MovieName), 
+  
+  p = document.createElement("p"),
+  p1 = document.createTextNode(description),
+
+  s = document.createElement("span"),
+  cl = document.createAttribute("class"),
+
+  image = document.createElement("img"),
+  att = document.createAttribute("src");
+  att.value = src;
+
+  cl.value="image";
+  image.setAttributeNode(att);
+  s.setAttributeNode(cl);
+  s.appendChild(image);
+
+  heading.appendChild(hed);
+  p.appendChild(p1);
+
+  header.appendChild(heading);
+  header.appendChild(p);
+  header.appendChild(s);
+  // document.getElementById('banner').children[0].appendChild(s);
+  document.getElementById('banner').children[0].appendChild(header);
+  
+}
+
 function getActors(){
+  
+  document.getElementById("banner").children[0].children[0].remove();
+  document.getElementById("banner").children[0].children[0].remove();
+  window.location.assign('/actors')
   $.ajax({
     url: '/actors',
     type: 'GET',
@@ -65,8 +108,13 @@ function getActors(){
     headers: {
        'Authorization': 'Bearer '+tokenUrl[1]
     },
+    dataType: 'json',
     success: function (result) {
-        console.log(result)
+      allActors = result.actors;
+      for(let i=0; i<allActors.length; i++){
+        displayData(allActors[i].name, "This is description",  "static/images/pic01--.jpg");
+      }
+      console.log(result)
     },
     error: function (error) {
       console.log(error)
@@ -77,7 +125,7 @@ function getActors(){
 
 function logOutSession(){
   localStorage.clear()
-  window.location.href = 'https://vrdev.eu.auth0.com/v2/logout'
+  window.location.href = 'https://vr-casting-agency.herokuapp.com/logout'
   window.location.replace('/')
 }
 
