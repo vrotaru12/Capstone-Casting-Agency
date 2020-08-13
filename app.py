@@ -15,10 +15,6 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
 
-#   return app
-
-# APP = create_app()
-
     @app.after_request
     def after_request(response):
         response.headers.add(
@@ -40,22 +36,32 @@ def create_app(test_config=None):
     def main_page():
         return render_template('index.html')
 
+    @app.route('/form')
+    def form_page():
+        return render_template('form.html')
+    
+    @app.route('/about')
+    def about_page():
+        return render_template('about.html')
+
     '''
   @HERE implementing endpoint
     GET /actors
   '''
     @app.route('/actors')
-    @requires_auth('get:actor')
-    def get_actors(payload):
+    # @requires_auth('get:actor')
+    # def get_actors(payload):
+    def get_actors():
         actors = Actor.query.all()
 
         if len(actors) == 0:
             abort(404)
-
-        return jsonify({
-            'success': True,
-            'actors': [actor.short() for actor in actors]
-        }), 200
+        
+        # return jsonify({
+        #     'success': True,
+        #     'actors': [actor.short() for actor in actors]
+        
+        return render_template('actors.html', actors=actors)
 
     '''
   @HERE implementing endpoint
@@ -79,17 +85,19 @@ def create_app(test_config=None):
     GET /movies
   '''
     @app.route('/movies')
-    @requires_auth('get:movie')
-    def get_movies(payload):
+    # @requires_auth('get:movie')
+    # def get_movies(payload):
+    def get_movies():
         movies = Movie.query.all()
 
         if len(movies) == 0:
             abort(404)
 
-        return jsonify({
-            'success': True,
-            'movies': [movie.short() for movie in movies]
-        }), 200
+        # return jsonify({
+        #     'success': True,
+        #     'movies': [movie.short() for movie in movies]
+        # }), 200
+        return render_template('movies.html', movies=movies)
 
     # '''
     # @HERE implementing endpoint
