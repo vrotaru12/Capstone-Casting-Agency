@@ -14,16 +14,14 @@
 			<header id="header">
 				<nav id="nav">
 					<ul>
-						<li id="getActors"><a  href="#" onclick="getActors()">Actors</a></li>
-						<li id="getMovies"><a  href="#" onclick="getMovies()">Movies</a></li> 
-						<li id="addMovie"><a  href="#" class="button m-button" data-target="#actorAdd">Add Movie</a></li>
-						<li id="addActor"><a  href="#" class="button m-button" data-target="#movieAdd">Add Actor</a></li>
+						<li id="getActors" {% if request.endpoint == 'actors' %} class="active" {% endif %}><a href="{{ url_for('get_actors') }}" >Actors</a></li>
+						<li id="getMovies" {% if request.endpoint == 'movies' %} class="active" {% endif %}><a href="{{ url_for('get_movies') }}" >Movies</a></li>
 						<li id="aboutUsbutton"><a href="#two">About Us</a></li>
 						<li id="contactButton">
-							<a href="#">Contact Us</a>
+							<a href="#">Add Actors/Movies</a>
 							<ul>
-								<li><a href="/form">Form</a></li>
-								<li><a href="#footer">Social Media</a></li>
+								<li><a href="#"onclick="openForm('ActorForm')" >Add Actor </a></li>
+								<li><a href="#" onclick="openForm('MovieForm')" >Add Movie</a></li>
 							</ul>
 						</li>
 						<li><a id="LogInbutton" href="https://vrdev.eu.auth0.com/authorize?audience=MovieCastApp&response_type=token&client_id=nufEsETO2W43Bo42Ai7YzNdsp7woWbmP&redirect_uri=https://vr-casting-agency.herokuapp.com/" class="button primary">Log in</a></li>
@@ -42,9 +40,77 @@
 								or source individuals with both specialist skills and looks.</p>
 						</header>
 						<span class="image"><img id="profileImage" src="static/images/pic01.jpg" alt="Profile Image" /></span>
+						{% block content %}{% endblock %}
 					</div>
 					<a href="#two" class="goto-next scrolly">Next</a>
+
+					<div class="form-div" id="MovieForm">
+						<form class="form-area">
+							<button type="submit" class="button-cancel" onclick="closeForm('MovieForm')"><b>╳</b></button>
+							<div class="form-title">Add a New Movie</div>
+							<div>
+								<span class="form-label">Title</span>
+								<input type="text" id="movie-title" required>
+							</div>
+							<div>
+								<span class="form-label">Release Date</span>
+								<input type="text" id="movie-release" required>
+							</div>
+						<button type="submit" class="button-submit" id="submit-movie-form">Submit</button>
+					  </form>
+					</div>
+
+					<div class="form-div" id="ActorForm">
+						<form class="form-area">
+							<button type="submit" class="button-cancel" onclick="closeForm('ActorForm')"><b>╳</b></button>
+							<div class="form-title">Add a New Actor</div>
+							<div>
+								<span class="form-label">Name</span>
+								<input type="text" id="actor-name" required>
+							</div>
+							<div>
+								<span class="form-label">Gender</span>
+								<input type="text" id="actor-gender" required>
+							</div>
+							<div>
+								<span class="form-label">Age</span>
+								<input type="text" id="actor-age" required>
+							</div>
+						<button type="submit" class="button-submit" id="submit-actor-form">Submit</button>
+					  </form>
+					</div>
 				</section>
+
+							<!-- Highlights -->
+							<!-- <section id="highlights" class="wrapper style3">
+								<div class="title">The Endorsements</div>
+								<div class="container">
+									<div class="row aln-center">
+										<div class="col-4 col-12-medium">
+											<section class="highlight">
+												<a href="#" class="image featured"><img src="static/images/pic06.jpg" alt="" /></a>
+												<h3><a href="#">Aliquam diam consequat</a></h3>
+												<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
+											</section>
+										</div>
+										<div class="col-4 col-12-medium">
+											<section class="highlight">
+												<a href="#" class="image featured"><img src="static/images/pic06.jpg" alt="" /></a>
+												<h3><a href="#">Nisl adipiscing sed lorem</a></h3>
+												<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
+											</section>
+										</div>
+										<div class="col-4 col-12-medium">
+											<section class="highlight">
+												<a href="#" class="image featured"><img src="static/images/pic06.jpg" alt="" /></a>
+												<h3><a href="#">Mattis tempus lorem</a></h3>
+												<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
+											</section>
+										</div>
+									</div>
+								</div>
+							</section>
+				 -->
 
 			<!-- Two -->
 				<section id="two" class="spotlight style2 right">
@@ -65,7 +131,7 @@
 							<li>More than just background</li>
 						</ul>
 						<ul class="actions">
-							<li><a href="about.html" class="button">Learn More</a></li>
+							<li><a href="/about" class="button">Learn More</a></li>
 						</ul>
 					</div>
 				
@@ -83,7 +149,7 @@
 						<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
 					</ul>
 				</footer>
-				{% block actors %}{% endblock %}
+				
 
 		</div>
 
