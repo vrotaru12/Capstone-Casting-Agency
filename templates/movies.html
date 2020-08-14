@@ -1,18 +1,24 @@
 {% extends 'index.html' %}
 {% block title %}Casting Agency | Movies{% endblock %}
 {% block content %}
-<ul class="items">
-	{% for movie in movies %}
-	<li>
-		<a href="/movies/{{ movie.id }}">
-			<i class="fas fa-users"></i>
-			<div class="item">
-				<h5>{{ movie.title }}</h5>
+<section id="highlights" class="wrapper style3">
+	<div class="title">The Movies</div>
+	<div class="container">
+		<div class="row aln-center">
+			{% for movie in movies %}
+			<div class="col-4 col-12-medium">
+				<section class="highlight">
+					<button type="submit" data-id="{{ movie.id }}" class="button-delete" title="Remove movie"><i class="fa fa-trash-alt"></i></button>
+					<button type="submit" data-id="{{ movie.id }}" class="button-edit" title="Edit movie"><i class="fa fa-edit"></i></button>
+					<a href="/movies/{{ movie.id }}" class="image featured"><img src="static/images/pic03.jpg" alt="" /></a>
+					<h3><a href="/movies/{{ movie.id }}">{{ movie.name }}</a></h3>
+					<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante.</p>
+				</section>
+				
 			</div>
-		</a>
-		
-	</li>
-	<!-- <button style="-webkit-appearance: none; float: right; cursor: pointer;" class ="editmovie-button"> <i  data-id="{{ movie.id }}" class="fa fa-edit"></i></button> -->
-	{% endfor %}
-</ul>
+			{% endfor %}
+		</div>
+	</div>
+</section>
 {% endblock %}
+
