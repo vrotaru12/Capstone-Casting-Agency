@@ -107,7 +107,7 @@ ul.items {
 
   /*form section*/
   .button-add:focus, .form-area input[type=text]:focus, .button-submit, .button-cancel, 
-.button-remove, .button-edit, #button-signin, #button-signout, .dropbtn {
+.button-remove, #button-signin, #button-signout, .dropbtn {
     outline: none;
 }
 
@@ -141,7 +141,7 @@ ul.items {
 	font-weight: bold;
 }
 
-.button-cancel, .button-remove, .button-edit {
+.button-cancel, .button-remove {
     background: #e44c65;
     color: #FFFFFF;
     padding: 2px 6px;
@@ -150,6 +150,31 @@ ul.items {
     float: right;
     clear: right;
 }
+	.button-delete {
+		background: rgb(223 207 207 / 17%);
+		color: #FFFFFF;
+		padding: 8px 14px;
+		border: none;
+		cursor: pointer;
+		float: right;
+		clear: right;
+		outline: none;
+		border-radius: 10%;
+	}
+
+	.button-edit {
+		background: rgb(223 207 207 / 17%);
+		color: #FFFFFF;
+		padding: 8px 14px;
+		border: none;
+		cursor: pointer;
+		float: right;
+		clear: left;
+		outline: none;
+		border-radius: 10%;
+
+	}
+
 
 .button-cancel, .button-remove {
     background: #e44c65;
@@ -252,7 +277,8 @@ ul.items {
 
 	p {
 		margin: 0 0 2em 0;
-		color: black;
+		color: white;
+		font-style: oblique;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -263,8 +289,10 @@ ul.items {
 	}
 
 		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-			color: inherit;
+			color: #9293cc;
 			border: 0;
+			font-weight: 1000;
+			text-transform: uppercase;
 		}
 
 	h2 {
@@ -3669,10 +3697,17 @@ ul.items {
 			#banner .content .image {
 				border-radius: 100%;
 				display: inline-block;
-				height: 18em;
-				margin-left: 3em;
+				height: auto;
+				margin-left: auto;
+				margin-right: auto;
 				vertical-align: middle;
-				width: 18em;
+				width: auto;
+			}
+
+			section.highlight {
+				padding: initial;
+				background: rgba(39, 40, 51, 0.965);
+				border-radius: 5%;
 			}
 
 				#banner .content .image img {
