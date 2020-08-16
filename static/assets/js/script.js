@@ -1,6 +1,6 @@
 var tokenUrl = window.location.href.match(/\#(?:access_token)\=([\S\s]*?)\&/);
 
-function formLoadStartup() {
+function pageLoadStartup() {
 attachEventHandlers();
 maintainDisplayProperties();
 }
@@ -268,5 +268,5 @@ function closeForm(id) {
 
 
 $(function () {
-formLoadStartup();
+pageLoadStartup();
 });
