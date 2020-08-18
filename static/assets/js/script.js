@@ -2,6 +2,13 @@ var tokenUrl = window.location.href.match(/\#(?:access_token)\=([\S\s]*?)\&/);
 var editBtns = document.querySelectorAll('.button-edit');
 var deleteBtns = document.querySelectorAll('.button-delete');
 
+var permissions;
+if(tokenUrl){
+  localStorage.setItem('token', tokenUrl[1]);
+  permissions = JSON.parse(atob(tokenUrl[1].split('.')[1])).permissions;
+  localStorage.setItem('permissions', permissions);
+}
+
 function pageLoadStartup() {
 attachEventHandlers();
 maintainDisplayProperties();
@@ -13,23 +20,20 @@ maintainDisplayProperties();
 */
 function maintainDisplayProperties() {
   setInitialFormLoad(); //Only run on initial form load
-
-
 }
 
 /*
 * --------------------------------------- Event Handler Functions Declared Below ----------------------------------------
 */
 function attachEventHandlers() {
-  document.getElementById('LogInbutton').onclick = function(){
-    LogInSession();
-  }
   
   document.getElementById('submit-movie-form').onclick = function(e) {
     e.preventDefault();
     const title = document.getElementById('movie-title').value;
     const movie_release = document.getElementById('movie-release').value;
-    if (title == "" || movie_release == "") {
+    const movie_description = document.getElementById('movie-description').value;
+    const movie_image = document.getElementById('movie-image').value;
+    if (title == "" || movie_release == "" || movie_description == "" || movie_image == "") {
         alert("Please, ensure all the fields are filled out.");
     }
     else {
@@ -37,7 +41,9 @@ function attachEventHandlers() {
             method: 'POST',
             body: JSON.stringify({
                 'title': title,
-                'release_date': movie_release
+                'release_date': movie_release,
+                'description': movie_description,
+                'image': movie_image
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +62,9 @@ function attachEventHandlers() {
     const name = document.getElementById('actor-name').value;
     const actor_gender = document.getElementById('actor-gender').value;
     const actor_age = document.getElementById('actor-age').value;
-    if (name == "" || actor_gender == "" || actor_age == "") {
+    const actor_description = document.getElementById('actor-description').value;
+    const actor_picture = document.getElementById('actor-image').value;
+    if (name == "" || actor_gender == "" || actor_age == "" || actor_description == "" || actor_picture == "") {
         alert("Please, ensure all the fields are filled out.");
     }
     else {
@@ -65,7 +73,9 @@ function attachEventHandlers() {
             body: JSON.stringify({
                 'name': name,
                 'gender': actor_gender,
-                'age': actor_age
+                'age': actor_age,
+                'description': actor_description,
+                'image': actor_picture
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -84,7 +94,9 @@ function attachEventHandlers() {
     var movie_id = e.target.getAttribute("data-id");
     const newtitle = document.getElementById('new-movie-title').value;
     const newdate = document.getElementById('new-movie-release').value;
-    if (newtitle == "" || newdate == "") {
+    const newdescription = document.getElementById('new-movie-description').value;
+    const newimage = document.getElementById('new-movie-image').value;
+    if (newtitle == "" || newdate == "" || newdescription == "" || newimage == "") {
         alert("Title and Release Date must be filled out");
     }
     else {
@@ -92,7 +104,9 @@ function attachEventHandlers() {
             method: 'PATCH',
             body: JSON.stringify({
                 'title': newtitle,
-                'release_date': newdate
+                'release_date': newdate,
+                'description': newdescription,
+                'image': newimage
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -112,12 +126,16 @@ function attachEventHandlers() {
     const newname = document.getElementById('new-actor-name').value;
     const newgender = document.getElementById('new-actor-gender').value;
     const newage = document.getElementById('new-actor-age').value;
+    const newdescription = document.getElementById('new-actor-description').value;
+    const newimage = document.getElementById('new-actor-image').value;
         fetch('/actors/' + actor_id, {
             method: 'PATCH',
             body: JSON.stringify({
                 'name': newname,
                 'gender': newgender,
-                'age': newage
+                'age': newage,
+                'description': newdescription,
+                'image': newimage
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -140,7 +158,7 @@ function attachEventHandlers() {
       if(window.location.href === "https://vr-casting-agency.herokuapp.com/movies"){
         document.getElementById('submit-movie-edit').setAttribute('data-id', el_id);
         openForm('editMovieForm');
-      } else if(window.location.href === "https://vr-casting-agency.herokuapp.com/actors"){
+      } else if(window.location.href === "https://vr-casting-agency.herokuapp.com/actors-detail"){
         document.getElementById('submit-actor-edit').setAttribute('data-id', el_id);
         openForm('editActorForm');
       }
@@ -166,7 +184,7 @@ function attachEventHandlers() {
           window.location.reload();
         });
 
-      } else if(window.location.href === "https://vr-casting-agency.herokuapp.com/actors"){
+      } else if(window.location.href === "https://vr-casting-agency.herokuapp.com/actors-detail"){
         fetch('/actors/' + el_id, {
           method: 'DELETE',
           headers: {
@@ -193,6 +211,10 @@ function attachEventHandlers() {
 function setInitialFormLoad() {
 loggedStatus();
 if (localStorage.token) {
+  LogInSession();
+  if(document.getElementById('aboutUsbutton') != null){
+    document.getElementById('aboutUsbutton').remove();
+  }
   if(!localStorage.permissions.includes("post:actor") && !localStorage.permissions.includes("post:movie") && document.getElementById('AddRecordButton') != null){
     document.getElementById('AddRecordButton').remove();
   }
@@ -210,12 +232,11 @@ if (localStorage.token) {
   }
 
 
-  customiseUser("Casting Director");
+  
   if(document.getElementById('LogInbutton') != null){
     document.getElementById('LogInbutton').remove();
   }
   
-  profilechange(localStorage.permissions);
   
 }else{
   document.getElementById('LogOutbutton').remove();
@@ -230,29 +251,34 @@ if (localStorage.token) {
 * --------------------------------------- Automation Functions Declared Below ---------------------------------------
 */
 
+function populateEditForm(e) {
+  const spot_id = e.getAttribute("data-id");
+  const name = e.getAttribute("data-name");
+  const location = e.getAttribute("data-location");
+  document.getElementById("new-climbing-spot-name").setAttribute('value', name);
+  document.getElementById("new-climbing-spot-location").setAttribute('value', location);
+}
+
 
 function LogInSession(){
-  var permissions;
-  if(tokenUrl){
-    localStorage.setItem('token', tokenUrl[1]);
-    permissions = JSON.parse(atob(tokenUrl[1].split('.')[1])).permissions;
-    localStorage.setItem('permissions', permissions);
-    
+  if(localStorage.permissions.includes("patch:actor") && localStorage.permissions.includes("patch:movie")){
+    customiseUser("Casting Director");
+    profilechange("static/images/pic05.jpg");
+  }else{
+    if(localStorage.permissions.includes("post:actor") && localStorage.permissions.includes("post:movie")){
+      customiseUser("Executive Producer");
+      profilechange("static/images/pic07.jpg");
+    }else{
+      customiseUser("Casting Assistant");
+      profilechange("static/images/pic05.jpg");
+    }
+
   }
 }
 
-function profilechange(permission){
-  if(permission.includes("patch:movie") && permission.includes("patch:actor")){
-    if((document.getElementById('aboutUsbutton') != null) && (document.getElementById("profileImage") != null)){
-      document.getElementById('aboutUsbutton').remove();
-      document.getElementById("profileImage").src = "static/images/pic01-.jpg";
-    }
-  }else if(permission.includes("post:movie") && permission.includes("post:actor") 
-  && !permission.includes("patch:actor") && !permission.includes("patch:movie")){
-    if( (document.getElementById("profileImage") != null)){
-      document.getElementById("profileImage").src = "static/images/pic01--.jpg";
-    }
-    
+function profilechange(path){
+  if(document.getElementById("profileImage") != null){
+    document.getElementById("profileImage").src = path;
   }
 }
 
@@ -268,7 +294,7 @@ function customiseUser(user){
 
 function loggedStatus(){
   document.getElementById('two').remove();
-  if(window.location.href === "https://vr-casting-agency.herokuapp.com/actors"){
+  if(window.location.href === "https://vr-casting-agency.herokuapp.com/actors-detail"){
     document.getElementById('profileImage').parentElement.remove();
     document.getElementById('c2').remove();
     document.getElementById("c1").remove();
