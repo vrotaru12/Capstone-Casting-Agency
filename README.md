@@ -1,6 +1,7 @@
 # Casting Agency App
 Casting Agency is an app that is responsible for creating movies, adding actors and assigning them to those movies. 
-This is my capstone project for the Udacity Full Stack Web Developer nanodegree.
+3 diferent users with different permissions can log into app and access data acordingly.
+
 
 # Accessing Casting Agency app on the web
 
