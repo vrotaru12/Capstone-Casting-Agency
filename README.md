@@ -282,3 +282,23 @@ Response:
 
 ## Tests
 To run the tests, run `py tests.py`.
+
+
+## Troubleshoot
+
+If there is a problem with migration process of your db, the db from Heroku app will be empty and you will need to figure out how to fix it 
+by applying a fix for migration process or to configure the db manually bypushing it to Heroku and running:
+
+
+```bash
+PGPASSWORD=secret pg_dump -h localhost -p 5432 -U postgres your_local_database > database.dump
+```
+and 'database.dump' will be generated with SQL commands that, when fed back to the server, will recreate the database in the same state as it was at the time of the dump. PostgreSQL provides the utility program pg_dump for this purpose.
+
+```bash
+heroku pg:psql DATABASE_URL --app name_of_your_app < database.dump
+```
+## More information
+Getting Started on Heroku with Python: https://devcenter.heroku.com/articles/getting-started-with-python
+Heroku Postgres: https://devcenter.heroku.com/articles/heroku-postgresql#local-setup
+To connect postgres db from heroku and add queries: ``` heroku pg:psql --app vr-casting-agency```
