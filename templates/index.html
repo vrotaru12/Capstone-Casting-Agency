@@ -14,18 +14,19 @@
 			<header id="header">
 				<nav id="nav">
 					<ul>
-						<li id="getActors" {% if request.endpoint == 'actors' %} class="active" {% endif %}><a href="{{ url_for('get_actors') }}" >Actors</a></li>
+						<li id="homeButton"><a href="/">Home</a></li>
+						<li id="getActors" {% if request.endpoint == 'actors' %} class="active" {% endif %}><a href="{{ url_for('get_actors_detail') }}" >Actors</a></li>
 						<li id="getMovies" {% if request.endpoint == 'movies' %} class="active" {% endif %}><a href="{{ url_for('get_movies') }}" >Movies</a></li>
 						<li id="aboutUsbutton"><a href="#two">About Us</a></li>
-						<li id="contactButton">
+						<li id="AddRecordButton">
 							<a href="#">Add Actors/Movies</a>
 							<ul>
-								<li><a href="#"onclick="openForm('ActorForm')" >Add Actor </a></li>
-								<li><a href="#" onclick="openForm('MovieForm')" >Add Movie</a></li>
+								<li id="addActor"><a href="#"onclick="openForm('ActorForm')" >Add Actor </a></li>
+								<li id="addMovie"><a href="#" onclick="openForm('MovieForm')" >Add Movie</a></li>
 							</ul>
 						</li>
 						<li><a id="LogInbutton" href="https://vrdev.eu.auth0.com/authorize?audience=MovieCastApp&response_type=token&client_id=nufEsETO2W43Bo42Ai7YzNdsp7woWbmP&redirect_uri=https://vr-casting-agency.herokuapp.com/" class="button primary">Log in</a></li>
-						<li><a id="LogOutbutton" onclick="logOutSession()" class="button primary">Log out</a></li>
+						<li><a id="LogOutbutton" class="button primary">Log out</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -42,7 +43,7 @@
 						<span class="image"><img id="profileImage" src="static/images/pic01.jpg" alt="Profile Image" /></span>
 						{% block content %}{% endblock %}
 					</div>
-					<a href="#two" class="goto-next scrolly">Next</a>
+					<!-- <a href="#two" class="goto-next scrolly">Next</a> -->
 
 					<div class="form-div" id="MovieForm">
 						<form class="form-area">
@@ -53,8 +54,16 @@
 								<input type="text" id="movie-title" required>
 							</div>
 							<div>
+								<span class="form-label">Description</span>
+								<input type="text" id="movie-description" required>
+							</div>
+							<div>
 								<span class="form-label">Release Date</span>
 								<input type="text" id="movie-release" required>
+							</div>
+							<div>
+								<span class="form-label">Movie Picture</span>
+								<input type="text" id="movie-image" required>
 							</div>
 						<button type="submit" class="button-submit" id="submit-movie-form">Submit</button>
 					  </form>
@@ -69,6 +78,10 @@
 								<input type="text" id="actor-name" required>
 							</div>
 							<div>
+								<span class="form-label">Description</span>
+								<input type="text" id="actor-description" required>
+							</div>
+							<div>
 								<span class="form-label">Gender</span>
 								<input type="text" id="actor-gender" required>
 							</div>
@@ -76,41 +89,67 @@
 								<span class="form-label">Age</span>
 								<input type="text" id="actor-age" required>
 							</div>
+							<div>
+								<span class="form-label">Profile picture</span>
+								<input type="text" id="actor-image" required>
+							</div>
 						<button type="submit" class="button-submit" id="submit-actor-form">Submit</button>
 					  </form>
 					</div>
-				</section>
 
-							<!-- Highlights -->
-							<!-- <section id="highlights" class="wrapper style3">
-								<div class="title">The Endorsements</div>
-								<div class="container">
-									<div class="row aln-center">
-										<div class="col-4 col-12-medium">
-											<section class="highlight">
-												<a href="#" class="image featured"><img src="static/images/pic06.jpg" alt="" /></a>
-												<h3><a href="#">Aliquam diam consequat</a></h3>
-												<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
-											</section>
-										</div>
-										<div class="col-4 col-12-medium">
-											<section class="highlight">
-												<a href="#" class="image featured"><img src="static/images/pic06.jpg" alt="" /></a>
-												<h3><a href="#">Nisl adipiscing sed lorem</a></h3>
-												<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
-											</section>
-										</div>
-										<div class="col-4 col-12-medium">
-											<section class="highlight">
-												<a href="#" class="image featured"><img src="static/images/pic06.jpg" alt="" /></a>
-												<h3><a href="#">Mattis tempus lorem</a></h3>
-												<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
-											</section>
-										</div>
-									</div>
-								</div>
-							</section>
-				 -->
+					<div class="form-div" id="editMovieForm">
+						<form class="form-area">
+							<button type="submit" class="button-cancel" id="cancel-edit"><b>╳</b></button>
+							<div class="form-title">Edit Movie</div>
+							<div>
+								<span class="form-label">Title</span>
+								<input type="text" id="new-movie-title" required>
+							</div>
+							<div>
+								<span class="form-label">Description</span>
+								<input type="text" id="new-movie-description" required>
+							</div>
+							<div>
+								<span class="form-label">Release Date</span>
+								<input type="text" id="new-movie-release" required>
+							</div>
+							<div>
+								<span class="form-label">Movie picture</span>
+								<input type="text" id="new-movie-image" required>
+							</div>
+						<button type="submit" class="button-submit" id="submit-movie-edit" data-id="">Submit</button>
+					  </form>
+					</div>
+
+					<div class="form-div" id="editActorForm">
+						<form class="form-area">
+							<button type="submit" class="button-cancel" onclick="closeForm('editActorForm')"><b>╳</b></button>
+							<div class="form-title">Edit Actor</div>
+							<div>
+								<span class="form-label">Name</span>
+								<input type="text" id="new-actor-name" required>
+							</div>
+							<div>
+								<span class="form-label">Description</span>
+								<input type="text" id="new-actor-description" required>
+							</div>
+							<div>
+								<span class="form-label">Gender</span>
+								<input type="text" id="new-actor-gender" required>
+							</div>
+							<div>
+								<span class="form-label">Age</span>
+								<input type="text" id="new-actor-age" required>
+							</div>
+							<div>
+								<span class="form-label">Profile Picture</span>
+								<input type="text" id="new-actor-image" required>
+							</div>
+						<button type="submit" class="button-submit" id="submit-actor-edit" data-id="">Submit</button>
+					  </form>
+					</div>
+					
+				</section>
 
 			<!-- Two -->
 				<section id="two" class="spotlight style2 right">
