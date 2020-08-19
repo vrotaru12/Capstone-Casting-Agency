@@ -1,6 +1,6 @@
 # Casting Agency App
 Casting Agency is an app that is responsible for creating movies, adding actors and assigning them to those movies. 
-3 diferent users with different permissions can log into app and access data acordingly.
+3 diferent users with different permissions can log into the app and access data acordingly.
 
 
 # Accessing Casting Agency app on the web
