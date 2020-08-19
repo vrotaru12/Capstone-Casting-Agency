@@ -57,28 +57,31 @@ def create_app(test_config=None):
         if len(actors) == 0:
             abort(404)
         
-        # return jsonify({
-        #     'success': True,
-        #     'actors': [actor.short() for actor in actors]
+        return jsonify({
+            'success': True,
+            'actors': [actor.details() for actor in actors]
+        }), 200
         
-        return render_template('actors.html', actors=actors)
+        # return render_template('actors.html', actors=actors)
 
     '''
   @HERE implementing endpoint
     GET /actors-detail
   '''
     @app.route('/actors-detail')
-    @requires_auth('get:actor-detail')
-    def get_actors_detail(payload):
+    # @requires_auth('get:actor-detail')
+    # def get_actors_detail(payload):
+    def get_actors_detail():
         actors = Actor.query.all()
 
         if len(actors) == 0:
             abort(404)
 
-        return jsonify({
-            'success': True,
-            'actors': [actor.details() for actor in actors]
-        }), 200
+        # return jsonify({
+        #     'success': True,
+        #     'actors': [actor.details() for actor in actors]
+        # }), 200
+        return render_template('actors.html', actors=actors)
 
     '''
   @HERE implementing endpoint
@@ -112,11 +115,13 @@ def create_app(test_config=None):
         newname = body['name']
         newage = body['age']
         newgender = body['gender']
+        newdescription = body['description']
+        newpicture = body['image']
 
         try:
-            new_actor = Actor(name=newname, age=newage, gender=newgender)
+            new_actor = Actor(name=newname, age=newage, gender=newgender,description=newdescription, image=newpicture)
             new_actor.insert()
-            return jsonify({'success': True, 'actors': [new_actor.short()]})
+            return jsonify({'success': True, 'actors': [new_actor.details()]})
 
         except BaseException:
             abort(422)
@@ -132,9 +137,11 @@ def create_app(test_config=None):
 
         newtitle = body['title']
         newdate = body['release_date']
+        newdescription = body['description']
+        newpicture = body['image']
 
         try:
-            new_movie = Movie(title=newtitle, release_date=newdate)
+            new_movie = Movie(title=newtitle, release_date=newdate, description=newdescription, image=newpicture)
             new_movie.insert()
             return jsonify({'success': True, 'movies': [new_movie.short()]})
 
@@ -160,6 +167,10 @@ def create_app(test_config=None):
                 actor.age = body.get('age')
             if 'gender' in body:
                 actor.gender = body.get('gender')
+            if 'description' in body:
+                actor.description = body.get('description')
+            if 'image' in body:
+                actor.image = body.get('image')
 
             actor.update()
 
@@ -187,6 +198,10 @@ def create_app(test_config=None):
                 movie.title = body.get('title')
             if 'release_date' in body:
                 movie.release_date = body.get('release_date')
+            if 'description' in body:
+                movie.description = body.get('description')
+            if 'image' in body:
+                movie.image = body.get('image')
 
             movie.update()
 
