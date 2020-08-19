@@ -5,7 +5,7 @@ import os
 
 
 
-#database_path = "postgres://postgres:pasolvon12@localhost:5432/moviecast" to run locally
+#database_path = "postgres://USER:PASSWORD@localhost:5432/DBMNAME" to run locally
 #to run on Heroku
 database_path = "postgres://fnofdvcwumtzcf:61ed989a72681d6c5dd7098af9ef2df78bbcbe51fdf99eccee068ce5cffa2e2e@ec2-23-22-156-110.compute-1.amazonaws.com:5432/d6mv72jfbsls7e"
 db = SQLAlchemy()
