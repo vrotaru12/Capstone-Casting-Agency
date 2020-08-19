@@ -2,7 +2,26 @@
 Casting Agency is an app that is responsible for creating movies, adding actors and assigning them to those movies. 
 This is my capstone project for the Udacity Full Stack Web Developer nanodegree.
 
-Hosted on heroku. [Link](https://vr-casting-agency.herokuapp.com/).
+# Accessing Casting Agency app on the web
+
+Visit the following URL to see the app in action:
+* https://climbing-spot-app.herokuapp.com
+or click [Link](https://vr-casting-agency.herokuapp.com/).
+
+This app connects to a Postgres server hosted on Heroku. Casting Assistant can view the actors and Movies. Executive Producer can view, add and delete but has not edit permission.  Casting Director has all possible rights on Movies and Actors. The credentials for these 3 users are speciified bellow:
+
+Casting Assistant:
+* email: assistant@assistant.com
+* password: !!Assistant12
+
+Casting Producer:
+* email: producer@producer.com
+* password: !!Producer12
+
+Casting Director:
+* email: director@director.com
+* password: !!Director12
+
 ## Getting Started
 
 ### Installing Dependencies
