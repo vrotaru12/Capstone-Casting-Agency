@@ -9,10 +9,10 @@
 			<div class="col-4 col-12-medium">
 				<section class="highlight">
 					<button type="submit" data-id="{{ actor.id }}" class="button-delete" title="Remove actor"><i class="fa fa-trash-alt"></i></button>
-					<button type="submit" data-id="{{ actor.id }}" class="button-edit" title="Edit actor"><i class="fa fa-edit"></i></button>
-					<a href="/actors/{{ actor.id }}" class="image featured"><img src="static/images/pic01.jpg" alt="" /></a>
+					<button type="submit" data-id="{{ actor.id }}" data-name="{{actor.name}}" data-age="{{actor.age}}" data-gender="{{actor.gender}}" data-description="{{actor.description}}"  data-image="{{actor.image}}" id="button_edit_actor" class="button-edit" title="Edit actor"><i class="fa fa-edit"></i></button>
+					<a href="/actors/{{ actor.id }}" class="image featured"><img src="{{actor.image}}" alt="" /></a>
 					<h3><a href="/actors/{{ actor.id }}">{{ actor.name }}</a></h3>
-					<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
+					<p> Description: {{actor.description}} <br>Age: {{actor.age}} <br> Gender: {{actor.gender}}</p>
 				</section>
 				
 			</div>
@@ -21,4 +21,4 @@
 	</div>
 </section>
 {% endblock %}
-						
+				

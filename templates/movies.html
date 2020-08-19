@@ -9,10 +9,10 @@
 			<div class="col-4 col-12-medium">
 				<section class="highlight">
 					<button type="submit" data-id="{{ movie.id }}" class="button-delete" title="Remove movie"><i class="fa fa-trash-alt"></i></button>
-					<button type="submit" data-id="{{ movie.id }}" class="button-edit" title="Edit movie"><i class="fa fa-edit"></i></button>
-					<a href="/movies/{{ movie.id }}" class="image featured"><img src="static/images/pic03.jpg" alt="" /></a>
-					<h3><a href="/movies/{{ movie.id }}">{{ movie.name }}</a></h3>
-					<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante.</p>
+					<button type="submit" data-id="{{ movie.id }}" data-title="{{ movie.title }}" data-releaseDate="{{ movie.release_date }}" data-description="{{ movie.description }}" data-image="{{ movie.image }}" class="button-edit" title="Edit movie"><i class="fa fa-edit"></i></button>
+					<a href="/movies/{{ movie.id }}" class="image featured"><img src="{{movie.image}}" alt="" /></a>
+					<h3><a href="/movies/{{ movie.id }}">{{ movie.title }}</a></h3>
+					<p>Description: {{movie.description}} <br>Release Date: {{movie.release_date}} <br> Casting Date: 18/08/202</p>
 				</section>
 				
 			</div>
@@ -21,4 +21,3 @@
 	</div>
 </section>
 {% endblock %}
-
