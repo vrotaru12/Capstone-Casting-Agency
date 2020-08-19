@@ -62,10 +62,8 @@ In order to create 3 different roles that will log into the app, the following c
         - `get:actors`
         - `get:actor-detail`
         - `post:actors`
-      ```
-      email: gurdisfilea@gmail.com
-      password: !!!!Valerica!!
-      ```
+
+
     - Casting Director
       - All permissions a Casting Assistant has and…
       - Add or delete an actor from the database
@@ -79,10 +77,7 @@ In order to create 3 different roles that will log into the app, the following c
         - `post:movie`
         - `patch:movie`
         - `delete:movie`
-      ```
-      email: vrotaru@mastercontrol.com
-      password: !!Password!!
-      ```
+
     - Executive Producer
       - All permissions a Casting Director has and…
       - Add or delete a movie from the database
@@ -93,10 +88,7 @@ In order to create 3 different roles that will log into the app, the following c
         - `get:movie`
         - `post:movie`
         - `delete:movie`
-      ```
-      email: gurdisvaleriu@gmail.com
-      password: !!!!Password12
-      ```
+
 7. Test your endpoints with [Postman](https://getpostman.com). 
 
 
