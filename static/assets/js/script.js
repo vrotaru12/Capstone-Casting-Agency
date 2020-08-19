@@ -10,8 +10,8 @@ if(tokenUrl){
 }
 
 function pageLoadStartup() {
-attachEventHandlers();
-maintainDisplayProperties();
+  attachEventHandlers();
+  maintainDisplayProperties();
 }
 
 
@@ -92,10 +92,10 @@ function attachEventHandlers() {
   document.getElementById('submit-movie-edit').onclick = function(e) {
     e.preventDefault();
     var movie_id = e.target.getAttribute("data-id");
-    const newtitle = document.getElementById('new-movie-title').value;
-    const newdate = document.getElementById('new-movie-release').value;
-    const newdescription = document.getElementById('new-movie-description').value;
-    const newimage = document.getElementById('new-movie-image').value;
+    var newtitle = document.getElementById('new-movie-title').value,
+     newdate = document.getElementById('new-movie-release').value,
+     newdescription = document.getElementById('new-movie-description').value,
+     newimage = document.getElementById('new-movie-image').value;
     if (newtitle == "" || newdate == "" || newdescription == "" || newimage == "") {
         alert("Title and Release Date must be filled out");
     }
@@ -149,6 +149,11 @@ function attachEventHandlers() {
   
   };
 
+  document.getElementById('LogOutbutton').onclick = function(e) {
+    logOutSession();
+  }
+
+
 
   // Edit buttons functionality 
 
@@ -158,9 +163,28 @@ function attachEventHandlers() {
       if(window.location.href === "https://vr-casting-agency.herokuapp.com/movies"){
         document.getElementById('submit-movie-edit').setAttribute('data-id', el_id);
         openForm('editMovieForm');
+        const title = editBtns[i].getAttribute("data-title"),
+        description = editBtns[i].getAttribute("data-description"), 
+        release_date = editBtns[i].getAttribute("data-releaseDate"),
+        image = editBtns[i].getAttribute("data-image");
+
+        document.getElementById("new-movie-title").setAttribute('value', title);
+        document.getElementById("new-movie-description").setAttribute('value', description);
+        document.getElementById("new-movie-release").setAttribute('value', release_date);
+        document.getElementById("new-movie-image").setAttribute('value', image);
       } else if(window.location.href === "https://vr-casting-agency.herokuapp.com/actors-detail"){
         document.getElementById('submit-actor-edit').setAttribute('data-id', el_id);
         openForm('editActorForm');
+        const name = editBtns[i].getAttribute("data-name"),
+        description = editBtns[i].getAttribute("data-description"), 
+        age = editBtns[i].getAttribute("data-age"),
+        gender = editBtns[i].getAttribute("data-gender"),
+        image = editBtns[i].getAttribute("data-image");
+        document.getElementById("new-actor-name").setAttribute('value', name);
+        document.getElementById("new-actor-description").setAttribute('value', description);
+        document.getElementById("new-actor-gender").setAttribute('value', gender);
+        document.getElementById("new-actor-age").setAttribute('value', age);
+        document.getElementById("new-actor-image").setAttribute('value', image);
       }
     
     }
@@ -202,6 +226,11 @@ function attachEventHandlers() {
   }
   // delete buttons functionality 
 
+  document.getElementById('cancel-edit').onclick = function() {
+    document.getElementById('editMovieForm').style.display = "none";
+  }
+
+
 }
 
 
@@ -211,7 +240,12 @@ function attachEventHandlers() {
 function setInitialFormLoad() {
 loggedStatus();
 if (localStorage.token) {
+  if(window.location.href.indexOf("?") != -1){
+    var newurl = window.location.href.replace(/[?]/g, '');
+    window.location.replace(newurl);
+  }
   LogInSession();
+  document.getElementById('two').remove();
   if(document.getElementById('aboutUsbutton') != null){
     document.getElementById('aboutUsbutton').remove();
   }
@@ -251,19 +285,10 @@ if (localStorage.token) {
 * --------------------------------------- Automation Functions Declared Below ---------------------------------------
 */
 
-function populateEditForm(e) {
-  const spot_id = e.getAttribute("data-id");
-  const name = e.getAttribute("data-name");
-  const location = e.getAttribute("data-location");
-  document.getElementById("new-climbing-spot-name").setAttribute('value', name);
-  document.getElementById("new-climbing-spot-location").setAttribute('value', location);
-}
-
-
 function LogInSession(){
   if(localStorage.permissions.includes("patch:actor") && localStorage.permissions.includes("patch:movie")){
     customiseUser("Casting Director");
-    profilechange("static/images/pic05.jpg");
+    profilechange("static/images/pic02.jpg");
   }else{
     if(localStorage.permissions.includes("post:actor") && localStorage.permissions.includes("post:movie")){
       customiseUser("Executive Producer");
@@ -293,7 +318,7 @@ function customiseUser(user){
 
 
 function loggedStatus(){
-  document.getElementById('two').remove();
+  
   if(window.location.href === "https://vr-casting-agency.herokuapp.com/actors-detail"){
     document.getElementById('profileImage').parentElement.remove();
     document.getElementById('c2').remove();
