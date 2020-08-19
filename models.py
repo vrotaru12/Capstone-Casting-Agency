@@ -5,7 +5,9 @@ import os
 
 
 
-database_path = "postgres://postgres:pasolvon12@localhost:5432/moviecast"
+#database_path = "postgres://postgres:pasolvon12@localhost:5432/moviecast" to run locally
+#to run on Heroku
+database_path = "postgres://fnofdvcwumtzcf:61ed989a72681d6c5dd7098af9ef2df78bbcbe51fdf99eccee068ce5cffa2e2e@ec2-23-22-156-110.compute-1.amazonaws.com:5432/d6mv72jfbsls7e"
 db = SQLAlchemy()
 
 '''
@@ -38,11 +40,16 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String())
     release_date = db.Column(db.String())
+    image = db.Column(db.String)
+    description = db.Column(db.String)
     cast = db.relationship('Cast', backref='Movie', lazy='dynamic')
 
-    def __init__(self, title, release_date):
+    def __init__(self, title, release_date,description, image):
         self.title = title
         self.release_date = release_date
+        self.description = description
+        self.image = image
+
 
     def insert(self):
         db.session.add(self)
@@ -65,7 +72,9 @@ class Movie(db.Model):
         return{
             'id' :self.id,
             'title' :self.title,
-            'release_date' : self.release_date
+            'release_date' : self.release_date,
+            'image': self.image,
+            'description': self.image
         }
 
 '''
@@ -80,19 +89,27 @@ class Actor(db.Model):
     name = db.Column(db.String)
     age = db.Column(db.Integer)
     gender = db.Column(db.String)
+    image = db.Column(db.String)
+    description = db.Column(db.String)
     cast = db.relationship('Cast', backref='Actor', lazy=True)
 
 
-    def __init__(self, name, age, gender):
+    def __init__(self, name, age, gender, image, description):
         self.name = name
         self.age = age
         self.gender = gender
+        self.description = description
+        self.image = image
     
     def insert(self):
         db.session.add(self)
         db.session.commit()
     
     def update(self):
+        db.session.commit()
+    
+    def delete(self):
+        db.session.delete(self)
         db.session.commit()
     
     def short(self):
@@ -106,8 +123,9 @@ class Actor(db.Model):
             'id': self.id,
             'name': self.name,
             'age': self.age,
-            'gender': self.gender
-
+            'gender': self.gender,
+            'image': self.image,
+            'description': self.description
         }
 
 '''
@@ -139,25 +157,6 @@ class Cast(db.Model):
             'actor_id' :self.actor_id,
             'actor_name' :self.Actor.name
         }
-
-    # def actor_details(self):
-    #     return{
-    #         'artist_id' :self.venue_id,
-    #         'artist_name' :self.Artist.name,
-    #         'artist_image_link' :self.Artist.image_link,
-    #         'start_time' :self.start_time
-
-    #     }
- 
-    
-    # def movie_details(self):
-    #     return{
-    #         'movie_id' :self.movie_id,
-    #         'movie_title' :self.Movie.title,
-    #         'venue_image_link' :self.Venue.image_link,
-    #         'start_time' :self.start_time
-            
-    #     }
 
         
   
