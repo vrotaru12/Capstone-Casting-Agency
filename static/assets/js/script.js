@@ -148,10 +148,14 @@ function attachEventHandlers() {
         });
   
   };
-
-  document.getElementById('LogOutbutton').onclick = function(e) {
-    logOutSession();
+  if(document.getElementById('LogOutbutton') != null){
+    document.getElementById('LogOutbutton').onclick = function(e) {
+      logOutSession();
+    }
   }
+
+
+
 
 
 
@@ -238,47 +242,47 @@ function attachEventHandlers() {
 * ------------------ Architecture Functions Declared Below -------------------------------------------------------
 */
 function setInitialFormLoad() {
-loggedStatus();
-if (localStorage.token) {
-  if(window.location.href.indexOf("?") != -1){
-    var newurl = window.location.href.replace(/[?]/g, '');
-    window.location.replace(newurl);
-  }
-  LogInSession();
-  document.getElementById('two').remove();
-  if(document.getElementById('aboutUsbutton') != null){
-    document.getElementById('aboutUsbutton').remove();
-  }
-  if(!localStorage.permissions.includes("post:actor") && !localStorage.permissions.includes("post:movie") && document.getElementById('AddRecordButton') != null){
+  loggedStatus();
+  if (localStorage.token) {
+    if(window.location.href.indexOf("?") != -1){
+      var newurl = window.location.href.replace(/[?]/g, '');
+      window.location.replace(newurl);
+    }
+    LogInSession();
+    document.getElementById('two').remove();
+    if(document.getElementById('aboutUsbutton') != null){
+      document.getElementById('aboutUsbutton').remove();
+    }
+    if(!localStorage.permissions.includes("post:actor") && !localStorage.permissions.includes("post:movie") && document.getElementById('AddRecordButton') != null){
+      document.getElementById('AddRecordButton').remove();
+    }
+
+    if(!localStorage.permissions.includes("patch:actor") && !localStorage.permissions.includes("patch:movie") &&  document.querySelectorAll('.button-edit').length != 0){
+      for (let i = 0; i < editBtns.length; i++) {
+        editBtns[i].remove();
+      }
+    }
+
+    if(!localStorage.permissions.includes("delete:actor") && !localStorage.permissions.includes("delete:movie") &&  document.querySelectorAll('.button-delete').length != 0){
+      for (let i = 0; i < deleteBtns.length; i++) {
+        deleteBtns[i].remove();
+      }
+    }
+
+
+    
+    if(document.getElementById('LogInbutton') != null){
+      document.getElementById('LogInbutton').remove();
+    }
+    
+    
+  }else{
+    document.getElementById('LogOutbutton').remove();
+    document.getElementById('getActors').remove();
+    document.getElementById('getMovies').remove();
     document.getElementById('AddRecordButton').remove();
+
   }
-
-  if(!localStorage.permissions.includes("patch:actor") && !localStorage.permissions.includes("patch:movie") &&  document.querySelectorAll('.button-edit').length != 0){
-    for (let i = 0; i < editBtns.length; i++) {
-      editBtns[i].remove();
-    }
-  }
-
-  if(!localStorage.permissions.includes("delete:actor") && !localStorage.permissions.includes("delete:movie") &&  document.querySelectorAll('.button-delete').length != 0){
-    for (let i = 0; i < deleteBtns.length; i++) {
-      deleteBtns[i].remove();
-    }
-  }
-
-
-  
-  if(document.getElementById('LogInbutton') != null){
-    document.getElementById('LogInbutton').remove();
-  }
-  
-  
-}else{
-  document.getElementById('LogOutbutton').remove();
-  document.getElementById('getActors').remove();
-  document.getElementById('getMovies').remove();
-  document.getElementById('AddRecordButton').remove();
-
-}
 }
 
 /*
@@ -287,14 +291,14 @@ if (localStorage.token) {
 
 function LogInSession(){
   if(localStorage.permissions.includes("patch:actor") && localStorage.permissions.includes("patch:movie")){
-    customiseUser("Casting Director");
+   // customiseUser("Casting Director");
     profilechange("static/images/pic02.jpg");
   }else{
     if(localStorage.permissions.includes("post:actor") && localStorage.permissions.includes("post:movie")){
-      customiseUser("Executive Producer");
+     // customiseUser("Executive Producer");
       profilechange("static/images/pic07.jpg");
     }else{
-      customiseUser("Casting Assistant");
+     //customiseUser("Casting Assistant");
       profilechange("static/images/pic05.jpg");
     }
 
@@ -344,7 +348,18 @@ function logOutSession(){
 
 
 function openForm(id) {
+  if(document.getElementsByTagName('body')[0].classList.contains("navPanel-visible")){
+    document.getElementsByTagName('body')[0].classList.remove("navPanel-visible");
+  }
   document.getElementById(id).style.display = "block";
+  // to check if any other container is showing. When add button is clicked but x button is not
+  var containers = document.getElementsByClassName('form-div');
+  for (var i=0; i<containers.length; i++){
+    if(containers[i].getAttribute("style") == "display: block;" && containers[i].getAttribute("id") != id){
+      closeForm(containers[i].getAttribute("id"));
+    }
+  }
+ 
 }
 
 function closeForm(id) {
