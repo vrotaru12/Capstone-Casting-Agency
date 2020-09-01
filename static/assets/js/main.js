@@ -13,7 +13,7 @@
 				click = $this.attr('onclick');
 
 			b.push(
-				'<a '+'id="'+id+'" ' + ( (typeof click !== 'undefined' ) ? ' onclick="' + click + '"' : '')
+				'<a '+'id="'+id+'1" ' + ( (typeof click !== 'undefined' ) ? ' onclick="' + click + '"' : '')
 				+ 'class="link depth-' + indent + '"' +
 					( (typeof target !== 'undefined' && target != '') ? ' target="' + target + '"' : '') +
 					( (typeof href !== 'undefined' && href != '') ? ' href="' + href + '"' : '') +
