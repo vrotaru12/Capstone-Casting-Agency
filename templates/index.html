@@ -11,26 +11,27 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-			<header id="header">
-				<nav id="nav">
-					<ul>
-						<li id="homeButton"><a href="/">Home</a></li>
-						<li id="getActors" {% if request.endpoint == 'actors' %} class="active" {% endif %}><a href="{{ url_for('get_actors_detail') }}" >Actors</a></li>
-						<li id="getMovies" {% if request.endpoint == 'movies' %} class="active" {% endif %}><a href="{{ url_for('get_movies') }}" >Movies</a></li>
-						<li id="aboutUsbutton"><a href="#two">About Us</a></li>
-						<li id="AddRecordButton">
-							<a href="#">Add Actors/Movies</a>
-							<ul>
-								<li id="addActor"><a href="#"onclick="openForm('ActorForm')" >Add Actor </a></li>
-								<li id="addMovie"><a href="#" onclick="openForm('MovieForm')" >Add Movie</a></li>
-							</ul>
-						</li>
-						<li><a id="LogInbutton" href="https://AUTH0-DOMAIN/authorize?audience=APIAUDIENCE&response_type=token&client_id=CLIENT_ID&redirect_uri=https://vr-casting-agency.herokuapp.com/" class="button primary">Log in</a></li>
-						<li><a id="LogOutbutton" class="button primary">Log out</a></li>
-					</ul>
-				</nav>
-			</header>
+	 <section id="header" class="wrapper">
+		<!-- Nav -->
+			<nav id="nav">
+				<ul>
+					<li ><a href="/" id="homeButton">Home</a></li>
+					<li  {% if request.endpoint == 'actors' %} class="active" {% endif %}><a id="getActors" href="{{ url_for('get_actors_detail') }}" >Actors</a></li>
+					<li  {% if request.endpoint == 'movies' %} class="active" {% endif %}><a id="getMovies" href="{{ url_for('get_movies') }}" >Movies</a></li>
+					<li ><a id="aboutUsbutton" href="#two">About Us</a></li>
+					<li id="AddRecordButton">
+						<a href="#">Add Actors/Movies</a>
+						<ul>
+							<li ><a id="addActor" href="#" onclick="openForm('ActorForm')" >Add Actor </a></li>
+							<li ><a id="addMovie" href="#" onclick="openForm('MovieForm')" >Add Movie</a></li>
+						</ul>
+					</li>
+					<li><a id="LogInbutton" href="https://vrdev.eu.auth0.com/authorize?audience=MovieCastApp&response_type=token&client_id=nufEsETO2W43Bo42Ai7YzNdsp7woWbmP&redirect_uri=https://vr-casting-agency.herokuapp.com/" class="button primary">Log in</a></li>
+					<li><a id="LogOutbutton" class="button primary">Log out</a></li>
+				</ul>
+			</nav>
 
+	</section>
 			<!-- Banner -->
 				<section id="banner">
 					<div class="content">
@@ -178,7 +179,26 @@
 
 
 			<!-- Footer -->
-				<footer id="footer">
+				<footer id="footer"> 
+					<!-- <div class="four modules footer-menu footer-content">
+						<nav class="footer-category">
+							<h4 class="footer-heading"> AGENCY</h4>
+							<div class="list">
+								<div class="item">
+									<a class="link" href="#">Pricing</a>
+								</div>
+								<div class="item">
+									<a class="link" href="#">Pricing</a>
+								</div>
+								<div class="item">
+									<a class="link" href="#">Pricing</a>
+								</div>
+								<div class="item">
+									<a class="link" href="#">Pricing</a>
+								</div>
+							</div>
+						</nav>
+					</div>  -->
 					<ul class="icons">
 						<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
 						<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
@@ -201,6 +221,7 @@
 			<script src="static/assets/js/breakpoints.min.js"></script>
 			<script src="static/assets/js/main.js"></script>
 			<script src="{{ url_for('static', filename='assets/js/script.js') }}"></script>
+			
 			 <!-- <script src="static/assets/js/script.js"></script> -->
 	</body>
 </html>
