@@ -152,6 +152,9 @@ function attachEventHandlers() {
     document.getElementById('LogOutbutton').onclick = function(e) {
       logOutSession();
     }
+    document.getElementById('LogOutbutton1').onclick = function(e) {
+      logOutSession();
+    }
   }
 
 
@@ -251,10 +254,14 @@ function setInitialFormLoad() {
     LogInSession();
     document.getElementById('two').remove();
     if(document.getElementById('aboutUsbutton') != null){
-      document.getElementById('aboutUsbutton').remove();
+      document.getElementById('aboutUsbutton').parentElement.remove();
+      document.getElementById('aboutUsbutton1') != null ? document.getElementById('aboutUsbutton1').remove() : console.log('sth');
     }
     if(!localStorage.permissions.includes("post:actor") && !localStorage.permissions.includes("post:movie") && document.getElementById('AddRecordButton') != null){
       document.getElementById('AddRecordButton').remove();
+      document.getElementById('addActor1').remove();
+      document.getElementById('addMovie1').remove();
+      document.getElementById('undefined1').remove();
     }
 
     if(!localStorage.permissions.includes("patch:actor") && !localStorage.permissions.includes("patch:movie") &&  document.querySelectorAll('.button-edit').length != 0){
@@ -272,16 +279,23 @@ function setInitialFormLoad() {
 
     
     if(document.getElementById('LogInbutton') != null){
-      document.getElementById('LogInbutton').remove();
+      document.getElementById('LogInbutton').parentElement.remove();
+      document.getElementById('LogInbutton1') != null ? document.getElementById('LogInbutton1').remove() : console.log('sth2');
     }
     
     
   }else{
-    document.getElementById('LogOutbutton').remove();
-    document.getElementById('getActors').remove();
-    document.getElementById('getMovies').remove();
+    document.getElementById('LogOutbutton').parentElement.remove();
+    document.getElementById('getActors').parentElement.remove();
+    document.getElementById('getMovies').parentElement.remove();
     document.getElementById('AddRecordButton').remove();
 
+    document.getElementById('getActors1').remove();
+    document.getElementById('getMovies1').remove();
+    document.getElementById('addActor1').remove();
+    document.getElementById('addMovie1').remove();
+    document.getElementById('undefined1').remove();
+    document.getElementById('LogOutbutton1').remove();
   }
 }
 
@@ -290,15 +304,16 @@ function setInitialFormLoad() {
 */
 
 function LogInSession(){
+  var nr = document.getElementById('nav').children[0].children.length;
   if(localStorage.permissions.includes("patch:actor") && localStorage.permissions.includes("patch:movie")){
-   // customiseUser("Casting Director");
+    customiseUser("Casting Director",nr-1);
     profilechange("static/images/pic02.jpg");
   }else{
     if(localStorage.permissions.includes("post:actor") && localStorage.permissions.includes("post:movie")){
-     // customiseUser("Executive Producer");
+      customiseUser("Executive Producer",nr-1);
       profilechange("static/images/pic07.jpg");
     }else{
-     //customiseUser("Casting Assistant");
+      customiseUser("Casting Assistant",nr-1);
       profilechange("static/images/pic05.jpg");
     }
 
@@ -311,13 +326,13 @@ function profilechange(path){
   }
 }
 
-function customiseUser(user){
+function customiseUser(user, n){
   let node = document.createElement("LI"), textnode = document.createTextNode(user);
   node.appendChild(textnode); 
-  document.getElementById('nav').children[0].insertBefore(node,document.getElementById('nav').children[0].children[5]);
-  document.getElementById('nav').children[0].children[5].style.fontFamily = 'Comic Sans MS';
-  document.getElementById('nav').children[0].children[5].style.fontStyle = 'italic';
-  document.getElementById('nav').children[0].children[5].style.fontSize = '18px';
+  document.getElementById('nav').children[0].insertBefore(node,document.getElementById('nav').children[0].children[n]);
+  document.getElementById('nav').children[0].children[n].style.fontFamily = 'Comic Sans MS';
+  document.getElementById('nav').children[0].children[n].style.fontStyle = 'italic';
+  document.getElementById('nav').children[0].children[n].style.fontSize = '18px';
 }
 
 
@@ -327,16 +342,20 @@ function loggedStatus(){
     document.getElementById('profileImage').parentElement.remove();
     document.getElementById('c2').remove();
     document.getElementById("c1").remove();
-    document.getElementById('LogInbutton').remove();
-    document.getElementById('aboutUsbutton').remove();
+    document.getElementById('LogInbutton').parentElement.remove();
+    document.getElementById('aboutUsbutton').parentElement.remove();
+    document.getElementById('LogInbutton1').remove();
+    document.getElementById('aboutUsbutton1').remove();
       
 
   }else if(window.location.href === "https://vr-casting-agency.herokuapp.com/movies"){
     document.getElementById('profileImage').parentElement.remove();
     document.getElementById('c2').remove();
     document.getElementById("c1").remove();
-    document.getElementById('LogInbutton').remove();
-    document.getElementById('aboutUsbutton').remove();
+    document.getElementById('LogInbutton').parentElement.remove();
+    document.getElementById('aboutUsbutton').parentElement.remove();
+    document.getElementById('LogInbutton1').remove();
+    document.getElementById('aboutUsbutton1').remove();
   }
 }
 
