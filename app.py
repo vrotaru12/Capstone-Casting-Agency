@@ -43,6 +43,17 @@ def create_app(test_config=None):
     @app.route('/about')
     def about_page():
         return render_template('about.html')
+    
+    @app.route('/actors/<int:actor_id>')
+    def show_actor(actor_id):
+        actors = Actor.query.filter(Actor.id == actor_id)[0]
+        
+
+        return jsonify({
+            'success': True,
+            'actors': actors.details()
+        }), 200
+
 
     '''
   @HERE implementing endpoint
@@ -101,6 +112,11 @@ def create_app(test_config=None):
         #     'movies': [movie.short() for movie in movies]
         # }), 200
         return render_template('movies.html', movies=movies)
+
+    '''
+  @HERE implementing endpoint
+    GET /movies / show actor by id
+  '''
 
     # '''
     # @HERE implementing endpoint
