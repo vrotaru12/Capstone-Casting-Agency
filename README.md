@@ -9,7 +9,7 @@ Visit the following URL to see the app in action:
 * https://vr-casting-agency.herokuapp.com
 or click [Link](https://vr-casting-agency.herokuapp.com/).
 
-This app connects to a Postgres server hosted on Heroku. Casting Assistant can view the actors and Movies. Executive Producer can view, add and delete but has not edit permission.  Casting Director has all possible rights on Movies and Actors. The credentials for these 3 users are speciified bellow:
+This app connects to a Postgres server hosted on Heroku. Casting Assistant can only view the Actors and Movies. Executive Producer can view, add and delete but has not edit permission.  Casting Director has all possible rights on Movies and Actors. The credentials for these 3 users are specified bellow:
 
 Casting Assistant:
 * email: assistant@assistant.com
