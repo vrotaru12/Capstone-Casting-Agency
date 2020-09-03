@@ -47,13 +47,12 @@ def create_app(test_config=None):
     @app.route('/actors/<int:actor_id>')
     def show_actor(actor_id):
         actors = Actor.query.filter(Actor.id == actor_id)[0]
-        
+        return render_template('show_actor.html', actors=actors)
 
-        return jsonify({
-            'success': True,
-            'actors': actors.details()
-        }), 200
-
+    @app.route('/movies/<int:movie_id>')
+    def show_movie(movie_id):
+        movies = Movie.query.filter(Movie.id == movie_id)[0]
+        return render_template('show_movie.html', movies=movies)
 
     '''
   @HERE implementing endpoint
