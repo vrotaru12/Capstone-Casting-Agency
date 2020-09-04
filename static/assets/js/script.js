@@ -12,6 +12,9 @@ if(tokenUrl){
 function pageLoadStartup() {
   attachEventHandlers();
   maintainDisplayProperties();
+  setInterval(function () {
+    moveSlider();
+  }, 3000);
 }
 
 
@@ -337,18 +340,7 @@ function customiseUser(user, n){
 
 
 function loggedStatus(){
-  
-  if(window.location.href === "https://vr-casting-agency.herokuapp.com/actors-detail"){
-    document.getElementById('profileImage').parentElement.remove();
-    document.getElementById('c2').remove();
-    document.getElementById("c1").remove();
-    document.getElementById('LogInbutton').parentElement.remove();
-    document.getElementById('aboutUsbutton').parentElement.remove();
-    document.getElementById('LogInbutton1').remove();
-    document.getElementById('aboutUsbutton1').remove();
-      
-
-  }else if(window.location.href === "https://vr-casting-agency.herokuapp.com/movies"){
+  if(window.location.href != "https://vr-casting-agency.herokuapp.com/" && window.location.href.includes("https://vr-casting-agency.herokuapp.com/#access_token") == false){
     document.getElementById('profileImage').parentElement.remove();
     document.getElementById('c2').remove();
     document.getElementById("c1").remove();
@@ -385,7 +377,21 @@ function closeForm(id) {
   document.getElementById(id).style.display = "none";
 }
 
+function moveSlider() {
+  // var slideCount = $('#slider li').length;
+	// var slideWidth = $('#slider li').width();
+	var slideHeight = $('#slider li').height();
+  // var sliderUlWidth = slideCount * slideWidth;
+  
 
+
+  $('#slider').animate({left: - slideHeight}, 200, function () {
+      // $('#slider').appendTo('#slider');
+      // $('#slider').css('left', '');
+      $('#slider li:last-child').prependTo('#slider');
+      $('#slider li:nth-last-child(2)').prependTo('#slider');
+  });
+};
 
 $(function () {
 pageLoadStartup();
