@@ -241,6 +241,11 @@ function attachEventHandlers() {
   }
 
 
+//   $('a.control_next').click(function () {
+//     moveRight();
+// });
+
+
 }
 
 
@@ -378,18 +383,10 @@ function closeForm(id) {
 }
 
 function moveSlider() {
-  // var slideCount = $('#slider li').length;
-	// var slideWidth = $('#slider li').width();
 	var slideHeight = $('#slider li').height();
-  // var sliderUlWidth = slideCount * slideWidth;
-  
-
 
   $('#slider').animate({left: - slideHeight}, 200, function () {
-      // $('#slider').appendTo('#slider');
-      // $('#slider').css('left', '');
       $('#slider li:last-child').prependTo('#slider');
-      $('#slider li:nth-last-child(2)').prependTo('#slider');
   });
 };
 
