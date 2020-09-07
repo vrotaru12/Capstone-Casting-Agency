@@ -154,9 +154,13 @@ class Cast(db.Model):
         return{
             'movie_id' :self.movie_id,
             'movie_title' :self.Movie.title,
+            'movie_image': self.Movie.image,
             'actor_id' :self.actor_id,
-            'actor_name' :self.Actor.name
+            'actor_name' :self.Actor.name,
+            'actor_description': self.Actor.description,
+            'actor_image': self.Actor.image,
         }
+
 
         
   
