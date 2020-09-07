@@ -1,0 +1,98 @@
+{% extends 'index.html' %}
+{% block content %}
+			<!-- Content -->
+			<section id="content">
+				<div class="container">
+					<div class="row">
+						<div class="col-3 col-12-medium">
+
+							<!-- Left Sidebar -->
+								<section>
+									<header>
+										<h3>Experince in Acting </h3>
+									</header>
+									<!-- <div class="listbar">
+										<a href="#" class="control_next"></a>
+									</div> -->
+									
+									<ul id="slider" class="link-list">
+										{% for actor in actors %}
+										<li><a href="https://vr-casting-agency.herokuapp.com/movies/{{actor.movie_id}}"><img src="https://vr-casting-agency.herokuapp.com/{{actor.movie_image}}" alt="{{actor.movie_title}}" /></a>
+											<a href="https://vr-casting-agency.herokuapp.com/movies/{{actor.movie_id}}">{{actor.movie_title}}</a>
+										</li>
+										{% endfor %}
+									</ul>
+									<!-- <div class="listbardown">
+										<a href="#" class="control_up"></a>
+									</div> -->
+									
+								<!-- </section>
+								<section>
+									<header>
+										<h3>Applied for</h3>
+									</header>
+									<ul class="link-list">
+										{% for actor in actors %}
+										<li><a href="#"><img src="https://vr-casting-agency.herokuapp.com/{{actor.movie_image}}" alt="{{actor.actor_name}}" /></a></li>
+										<li><a href="#">Ligula non varius</a></li>
+										{% endfor %}
+									</ul>
+								</section> -->
+						</div>
+						<div class="col-6 col-12-medium imp-medium">
+
+							<!-- Main Content -->
+								<section style="text-align: center;">
+									
+									<img class="profile" src="https://vr-casting-agency.herokuapp.com/{{actors[0].actor_image}}" alt="{{actors[0].actor_name}}" />
+									
+										<h2>{{actors[0].actor_name}}</h2>
+									
+									<p>
+										{{actors[0].actor_description}}
+									</p>
+									<p>
+										Mauris sit amet tellus urna. In facilisis, tortor vitae ultricies egestas, odio
+										mi rhoncus arcu, quis euismod felis felis et velit. Mauris varius consectetur erat
+										egestas tempus. Cras convallis odio sit amet risus convallis porttitor. Integer
+										vehicula fermentum ligula at pretium. Suspendisse semper iaculis eros, eu aliquam
+										justo imperdiet vel. Proin nec dictum mi. Duis commodo enim non tellus interdum
+										iaculis. Phasellus ultrices diam sit amet orci lacinia sed consequat dui auctor.
+									</p>
+								</section>
+
+						</div>
+						<div class="col-3 col-12-medium">
+
+							<!-- Right Sidebar -->
+								<section style="text-align: center;">
+									<header>
+										<h3>Theatres acting in </h3>
+									</header>
+									<ul class="link-list">
+										<li><a href="https://www.anvilarts.org.uk/">Viverra</a></li>
+										<li><a href="https://www.proteustheatre.com/">Carius</a></li>
+										<li><a href="https://www.odeon.co.uk/cinemas/basingstoke/149/">Natoque</a></li>
+										<li><a href="https://sohotheatre.com/">Penatibus et magnis</a></li>
+										<li><a href="https://www.qmc.ac.uk/community/central-studio">Dis parturient montes</a></li>
+										<li><a href="https://www.cornexchangenew.com/">Nascetur ridiculus</a></li>
+									</ul>
+								</section>
+								<section style="text-align: center;">
+									<header>
+										<h3>Contact Details:</h3>
+									</header>
+									<ul class="link-list">
+										Email: <li><a href="#">{{actors[0].actor_name}}@gmail.com</a></li>
+										Phone: <li><a href="#">+77128765432</a></li>
+										Facebook: <li><a href="#">{{actors[0].actor_name}}.facebook.com</a></li>
+										LinkdIn: <li><a href="#">{{actors[0].actor_name}}.linkdin.com</a></li>
+									</ul>
+								</section>
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+{% endblock %}
