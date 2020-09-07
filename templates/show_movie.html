@@ -11,46 +11,45 @@
 									<header>
 										<h3>Experince in Acting </h3>
 									</header>
-									<ul class="link-list">
-										<li><a href="#"><img src="https://vr-casting-agency.herokuapp.com/{{movies.image}}" alt="{{movies.title}}" /></a></li>
-										<li><a href="https://vr-casting-agency.herokuapp.com/movies/{{movies.id}}">Ligula non varius</a></li>
-										<li><a href="#"><img src="https://vr-casting-agency.herokuapp.com/{{movies.image}}" alt="{{movies.title}}" /></a></li>
-										<li><a href="#">Dis parturient montes</a></li>
-										<li><a href="#"><img src="https://vr-casting-agency.herokuapp.com/{{movies.image}}" alt="{{movies.title}}" /></a></li>
-										<li><a href="#">Nascetur ridiculus</a></li>
+									<!-- <div class="listbar">
+										<a href="#" class="control_next"></a>
+									</div> -->
+									
+									<ul id="slider" class="link-list">
+										{% for actor in actors %}
+										<li><a href="#"><img src="https://vr-casting-agency.herokuapp.com/{{actor.movie_image}}" alt="{{actor.movie_title}}" /></a>
+											<a href="https://vr-casting-agency.herokuapp.com/movies/{{actor.movie_id}}">{{actor.movie_title}}</a>
+										</li>
+										{% endfor %}
 									</ul>
-								</section>
+									<!-- <div class="listbardown">
+										<a href="#" class="control_up"></a>
+									</div> -->
+									
+								<!-- </section>
 								<section>
 									<header>
 										<h3>Applied for</h3>
 									</header>
 									<ul class="link-list">
-										<li><a href="#"><img src="https://vr-casting-agency.herokuapp.com/{{movies.image}}" alt="{{movies.title}}" /></a></li>
+										{% for actor in actors %}
+										<li><a href="#"><img src="https://vr-casting-agency.herokuapp.com/{{actor.movie_image}}" alt="{{actor.actor_name}}" /></a></li>
 										<li><a href="#">Ligula non varius</a></li>
-										<li><a href="#"><img src="https://vr-casting-agency.herokuapp.com/{{movies.image}}" alt="{{movies.title}}" /></a></li>
-										<li><a href="#">Penatibus et magnis</a></li>
+										{% endfor %}
 									</ul>
-								</section>
+								</section> -->
 						</div>
 						<div class="col-6 col-12-medium imp-medium">
 
 							<!-- Main Content -->
 								<section>
 									
-									<img src="https://vr-casting-agency.herokuapp.com/{{movies.image}}" alt="{{movies.title}}" />
+									<img src="https://vr-casting-agency.herokuapp.com/{{actors[0].actor_image}}" alt="{{actors[0].actor_name}}" />
 									<header>
-										<h2>{{movies.title}}</h2>
+										<h2>{{actors[0].actor_name}}</h2>
 									</header>
 									<p>
-										Sed faucibus viverra ligula, non varius magna semper vitae. Donec eu justo ut ipsum
-										hendrerit congue nec eu risus. Cum sociis natoque penatibus et magnis dis parturient
-										montes, nascetur ridiculus mus. Lorem ipsum dolor sit amet, consectetur adipiscing
-										egestas tempus. Cras convallis odio sit amet risus convallis porttitor. Integer
-										vehicula fermentum ligula at pretium. Suspendisse semper iaculis eros, eu aliquam
-										justo imperdiet vel. Proin nec dictum mi. Duis commodo enim non tellus interdum
-										elit. Suspendisse fermentum adipiscing nisi, a tempor libero malesuada at. Morbi
-										lacinia dui adipiscing risus eleifend tincidunt. Proin eu mauris eu tellus eleifend
-										hendrerit.
+										{{actors[0].actor_description}}
 									</p>
 									<p>
 										Mauris sit amet tellus urna. In facilisis, tortor vitae ultricies egestas, odio
