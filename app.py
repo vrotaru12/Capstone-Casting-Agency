@@ -48,11 +48,18 @@ def create_app(test_config=None):
     def show_actor(actor_id):
         casting = Cast.query.filter(Cast.actor_id == actor_id)
         actor = [cast.detail() for cast in casting]
+        length =  len(actor)
+        if (length == 0):
+            allactors = Actor.query.filter(Actor.id == actor_id)
+            actor = [act.details() for act in allactors]
+        allMovies =[ movie.short() for movie in Movie.query.all()]
+        actor.append(allMovies)
         return render_template('show_actor.html', actors=actor)
 
     @app.route('/movies/<int:movie_id>')
     def show_movie(movie_id):
-        movies = Movie.query.filter(Movie.id == movie_id)[0]
+        casting = Cast.query.filter(Cast.movie_id == movie_id)
+        movies = [cast.detail() for cast in casting]
         return render_template('show_movie.html', movies=movies)
 
     '''
