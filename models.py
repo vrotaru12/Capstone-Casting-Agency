@@ -68,7 +68,7 @@ class Movie(db.Model):
             'title':self.title
         }
     
-    def long(self):
+    def details(self):
         return{
             'id' :self.id,
             'title' :self.title,
