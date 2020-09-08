@@ -9,12 +9,12 @@
 							<!-- Left Sidebar -->
 								<section>
 									<header>
-										<h3>Experince in Acting </h3>
+										<h3>Acting in Movies </h3>
 									</header>
 									<!-- <div class="listbar">
 										<a href="#" class="control_next"></a>
 									</div> -->
-									
+									{% if actors[0].movie_id %}
 									<ul id="slider" class="link-list">
 										{% for actor in actors %}
 										<li><a href="https://vr-casting-agency.herokuapp.com/movies/{{actor.movie_id}}"><img src="https://vr-casting-agency.herokuapp.com/{{actor.movie_image}}" alt="{{actor.movie_title}}" /></a>
@@ -22,28 +22,25 @@
 										</li>
 										{% endfor %}
 									</ul>
+									{% else %}
+									<ul id="slider" class="link-list">
+										<li>
+											No experience Acting in Movies.
+										</li>
+									</ul>
+									{% endif %}
 									<!-- <div class="listbardown">
 										<a href="#" class="control_up"></a>
 									</div> -->
 									
-								<!-- </section>
-								<section>
-									<header>
-										<h3>Applied for</h3>
-									</header>
-									<ul class="link-list">
-										{% for actor in actors %}
-										<li><a href="#"><img src="https://vr-casting-agency.herokuapp.com/{{actor.movie_image}}" alt="{{actor.actor_name}}" /></a></li>
-										<li><a href="#">Ligula non varius</a></li>
-										{% endfor %}
-									</ul>
-								</section> -->
+								</section> 
+								
 						</div>
 						<div class="col-6 col-12-medium imp-medium">
 
 							<!-- Main Content -->
 								<section style="text-align: center;">
-									
+									{% if actors[0].actor_image %}
 									<img class="profile" src="https://vr-casting-agency.herokuapp.com/{{actors[0].actor_image}}" alt="{{actors[0].actor_name}}" />
 									
 										<h2>{{actors[0].actor_name}}</h2>
@@ -51,6 +48,15 @@
 									<p>
 										{{actors[0].actor_description}}
 									</p>
+									{% else %}
+									<img class="profile" src="https://vr-casting-agency.herokuapp.com/{{actors[0].image}}" alt="{{actors[0].name}}" />
+									
+										<h2>{{actors[0].name}}</h2>
+									
+									<p>
+										{{actors[0].description}}
+									</p>
+									{% endif %}
 									<p>
 										Mauris sit amet tellus urna. In facilisis, tortor vitae ultricies egestas, odio
 										mi rhoncus arcu, quis euismod felis felis et velit. Mauris varius consectetur erat
@@ -65,28 +71,50 @@
 						<div class="col-3 col-12-medium">
 
 							<!-- Right Sidebar -->
-								<section style="text-align: center;">
-									<header>
-										<h3>Theatres acting in </h3>
-									</header>
-									<ul class="link-list">
-										<li><a href="https://www.anvilarts.org.uk/">Viverra</a></li>
-										<li><a href="https://www.proteustheatre.com/">Carius</a></li>
-										<li><a href="https://www.odeon.co.uk/cinemas/basingstoke/149/">Natoque</a></li>
-										<li><a href="https://sohotheatre.com/">Penatibus et magnis</a></li>
-										<li><a href="https://www.qmc.ac.uk/community/central-studio">Dis parturient montes</a></li>
-										<li><a href="https://www.cornexchangenew.com/">Nascetur ridiculus</a></li>
-									</ul>
-								</section>
+							<section>
+								<header>
+									<h3>Assign Actor to Movies</h3>
+								</header>
+								<form class="cast-form">
+									<div>
+										<span class="form-label">Actor Name</span>
+										{% if actors[0].actor_name %}
+										<input type="text" id="cast-actor-name" value="{{actors[0].actor_name}}"  data-castId="{{ actors[0].actor_id }}">
+										{% else %}
+										<input type="text" id="cast-actor-name" value="{{actors[0].name}}" data-castId="{{ actors[0].actor_id }}">
+										{% endif %}
+									</div>
+									<div>
+										<span class="form-label">Movie Title</span>
+										<select name="cast-movie-title" id="cast-movie-title">
+											<option value="null"></option>
+											{% for movie in actors|last %}	
+											<option value="{{movie.id}}">{{movie.title}}</option>
+											{% endfor %}
+											
+										</select>
+										
+									</div>
+								<button type="submit" class="button primary" id="submit-cast-form">Assign</button>
+							  </form>
+							</section>
+
 								<section style="text-align: center;">
 									<header>
 										<h3>Contact Details:</h3>
 									</header>
 									<ul class="link-list">
-										Email: <li><a href="#">{{actors[0].actor_name}}@gmail.com</a></li>
-										Phone: <li><a href="#">+77128765432</a></li>
-										Facebook: <li><a href="#">{{actors[0].actor_name}}.facebook.com</a></li>
-										LinkdIn: <li><a href="#">{{actors[0].actor_name}}.linkdin.com</a></li>
+										{% if actors[0].actor_name %}
+											Email: <li><a href="#">{{actors[0].actor_name}}@gmail.com</a></li>
+											Phone: <li><a href="#">+77128765432</a></li>
+											Facebook: <li><a href="#">{{actors[0].actor_name}}.facebook.com</a></li>
+											LinkdIn: <li><a href="#">{{actors[0].actor_name}}.linkdin.com</a></li>
+										{% else %}
+											Email: <li><a href="#">{{actors[0].name}}@gmail.com</a></li>
+											Phone: <li><a href="#">+77128765432</a></li>
+											Facebook: <li><a href="#">{{actors[0].name}}.facebook.com</a></li>
+											LinkdIn: <li><a href="#">{{actors[0].name}}.linkdin.com</a></li>
+										{% endif %}
 									</ul>
 								</section>
 
