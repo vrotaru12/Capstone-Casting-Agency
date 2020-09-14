@@ -92,6 +92,73 @@ function attachEventHandlers() {
     }
   };
 
+  if(document.getElementById('submit-cast-form') != null){
+    document.getElementById('submit-cast-form').onclick = function(e) {
+      e.preventDefault();
+      var actor_id = document.getElementById('cast-actor-name').getAttribute("data-castid");
+      var movie_id = document.getElementById('cast-movie-title').value;
+  
+      if (actor_id == "" || movie_id == "null") {
+          alert("Please, ensure all the fields are filled out.");
+      }
+      else {
+          fetch('/cast-actor', {
+              method: 'POST',
+              body: JSON.stringify({
+                  'movie_id': movie_id,
+                  'actor_id': actor_id
+              }),
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + localStorage.token
+              }
+          })
+          .then(function(response) {
+            if (!response.ok) {
+              alert(Error(response.statusText));
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+        });
+      }
+    };
+  }
+
+  if(document.getElementById('submit-cast-form1') != null){
+    document.getElementById('submit-cast-form1').onclick = function(e) {
+      e.preventDefault();
+      var movie_id = document.getElementById('cast-movie-title').getAttribute("data-castid");
+      var actor_id = document.getElementById('cast-actor-name').value;
+  
+      if (actor_id == "" || movie_id == "null") {
+          alert("Please, ensure all the fields are filled out.");
+      }
+      else {
+          fetch('/cast-actor', {
+              method: 'POST',
+              body: JSON.stringify({
+                  'movie_id': movie_id,
+                  'actor_id': actor_id
+              }),
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + localStorage.token
+              }
+          })
+          .then(function(response) {
+            if (!response.ok) {
+              alert(Error(response.statusText));
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+        });
+      }
+    };
+  }
+ 
+
   document.getElementById('submit-movie-edit').onclick = function(e) {
     e.preventDefault();
     var movie_id = e.target.getAttribute("data-id");
@@ -254,7 +321,7 @@ function attachEventHandlers() {
 */
 function setInitialFormLoad() {
   loggedStatus();
-  if (localStorage.token) {
+  if (localStorage.token && tokenHasExpired(parseJwt(localStorage.token,1).exp)) {
     if(window.location.href.indexOf("?") != -1){
       var newurl = window.location.href.replace(/[?]/g, '');
       window.location.replace(newurl);
@@ -293,6 +360,7 @@ function setInitialFormLoad() {
     
     
   }else{
+
     document.getElementById('LogOutbutton').parentElement.remove();
     document.getElementById('getActors').parentElement.remove();
     document.getElementById('getMovies').parentElement.remove();
@@ -304,6 +372,9 @@ function setInitialFormLoad() {
     document.getElementById('addMovie1').remove();
     document.getElementById('undefined1').remove();
     document.getElementById('LogOutbutton1').remove();
+    if(localStorage.token && tokenHasExpired(parseJwt(localStorage.token,1).exp) ===  false){
+      alert('The session has expired. Please Log In again');
+    }
   }
 }
 
@@ -356,10 +427,55 @@ function loggedStatus(){
   }
 }
 
-function logOutSession(){
-  localStorage.clear()
-  window.location.href = 'https://vr-casting-agency.herokuapp.com/logout'
-  window.location.replace('/')
+// Convert a Unix timestamp to date&time in JavaScript
+function tokenHasExpired(UNIX_timestamp){
+  var a = new Date(UNIX_timestamp * 1000),time, 
+  // months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+  b = new Date();
+  if(parseInt(a.getFullYear()) >= parseInt(b.getFullYear())){
+    if(parseInt(a.getMonth()) > parseInt(b.getMonth())){
+      return true;
+    }else if(parseInt(a.getMonth()) == parseInt(b.getMonth())){
+      if(parseInt(a.getDate()) > parseInt(b.getDate())){
+        return true;
+      }else if(parseInt(a.getDate()) == parseInt(b.getDate())){
+        if(parseInt(a.getHours()) > parseInt(b.getHours())){
+          return true;
+        }else if(parseInt(a.getHours()) == parseInt(b.getHours())){
+          if(parseInt(a.getMinutes()) > parseInt(b.getMinutes())){
+            return true;
+          }else{
+            return false;
+          }
+        }else{
+          return false;
+        }
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
+  }else{
+    return false;
+  }
+}
+
+// decode token to find expiration date
+
+function parseJwt(token, n) {
+  var result = "";
+  if(token.includes(".")) {
+      var base64Url = token.split('.')[n];
+      
+      var base64 = decodeURIComponent(atob(base64Url).split('').map((c)=>{
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      
+      result = JSON.parse(base64)
+  }
+  
+  return result;
 }
 
 
@@ -389,6 +505,13 @@ function moveSlider() {
       $('#slider li:last-child').prependTo('#slider');
   });
 };
+
+function logOutSession(){
+  localStorage.clear()
+  window.location.href = 'https://vr-casting-agency.herokuapp.com/logout'
+  //https://vrdev.eu.auth0.com/v2/logout
+  window.location.replace('/')
+}
 
 $(function () {
 pageLoadStartup();
