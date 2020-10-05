@@ -6,6 +6,7 @@ from flask_wtf import Form
 from models import Movie, Cast, Actor, db_drop_and_create_all, setup_db
 from auth.auth import AuthError, requires_auth
 from flask_cors import CORS
+from sqlalchemy import distinct
 import os
 
 
@@ -46,7 +47,7 @@ def create_app(test_config=None):
     
     @app.route('/actors/<int:actor_id>')
     def show_actor(actor_id):
-        casting = Cast.query.filter(Cast.actor_id == actor_id)
+        casting = Cast.query.filter(Cast.actor_id == actor_id).distinct(Cast.actor_id, Cast.movie_id)
         actor = [cast.detail() for cast in casting]
         length =  len(actor)
         if (length == 0):
@@ -58,8 +59,15 @@ def create_app(test_config=None):
 
     @app.route('/movies/<int:movie_id>')
     def show_movie(movie_id):
-        casting = Cast.query.filter(Cast.movie_id == movie_id)
+        casting = Cast.query.filter(Cast.movie_id == movie_id).distinct(Cast.movie_id, Cast.actor_id)
         movies = [cast.detail() for cast in casting]
+        length =  len(movies)
+        if (length == 0):
+            allMovies = Movie.query.filter(Movie.id == movie_id)
+            movies = [mov.details() for mov in allMovies]
+
+        allActors =[ actor.short() for actor in Actor.query.all()]
+        movies.append(allActors)
         return render_template('show_movie.html', movies=movies)
 
     '''
@@ -94,11 +102,6 @@ def create_app(test_config=None):
 
         if len(actors) == 0:
             abort(404)
-
-        # return jsonify({
-        #     'success': True,
-        #     'actors': [actor.details() for actor in actors]
-        # }), 200
         return render_template('actors.html', actors=actors)
 
     '''
@@ -113,11 +116,6 @@ def create_app(test_config=None):
 
         if len(movies) == 0:
             abort(404)
-
-        # return jsonify({
-        #     'success': True,
-        #     'movies': [movie.short() for movie in movies]
-        # }), 200
         return render_template('movies.html', movies=movies)
 
     '''
@@ -170,6 +168,30 @@ def create_app(test_config=None):
 
         except BaseException:
             abort(422)
+
+
+
+    # '''
+    # @HERE implementing endpoint
+    #     POST /CAST
+    # '''
+
+    @app.route('/cast-actor', methods=['POST'])
+    @requires_auth('post:actor')
+    def add_actors_in_cast(payload):
+        body = request.get_json()
+
+        movie_id = body['movie_id']
+        actor_id = body['actor_id']
+
+        try:
+            new_cast = Cast(movie_id=movie_id, actor_id=actor_id)
+            new_cast.insert()
+            return jsonify({'success': True, 'cast': [new_cast.detail()]})
+
+        except BaseException:
+            abort(422)
+
 
     '''
   @HERE implementing endpoint
