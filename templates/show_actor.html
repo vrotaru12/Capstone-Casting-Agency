@@ -81,7 +81,7 @@
 										{% if actors[0].actor_name %}
 										<input type="text" id="cast-actor-name" value="{{actors[0].actor_name}}"  data-castId="{{ actors[0].actor_id }}">
 										{% else %}
-										<input type="text" id="cast-actor-name" value="{{actors[0].name}}" data-castId="{{ actors[0].actor_id }}">
+										<input type="text" id="cast-actor-name" value="{{actors[0].name}}" data-castId="{{ actors[0].id }}">
 										{% endif %}
 									</div>
 									<div>
@@ -108,12 +108,12 @@
 											Email: <li><a href="#">{{actors[0].actor_name}}@gmail.com</a></li>
 											Phone: <li><a href="#">+77128765432</a></li>
 											Facebook: <li><a href="#">{{actors[0].actor_name}}.facebook.com</a></li>
-											LinkdIn: <li><a href="#">{{actors[0].actor_name}}.linkdin.com</a></li>
+											LinkedIn: <li><a href="#">{{actors[0].actor_name}}.linkdin.com</a></li>
 										{% else %}
 											Email: <li><a href="#">{{actors[0].name}}@gmail.com</a></li>
 											Phone: <li><a href="#">+77128765432</a></li>
 											Facebook: <li><a href="#">{{actors[0].name}}.facebook.com</a></li>
-											LinkdIn: <li><a href="#">{{actors[0].name}}.linkdin.com</a></li>
+											LinkedIn: <li><a href="#">{{actors[0].name}}.linkdin.com</a></li>
 										{% endif %}
 									</ul>
 								</section>
