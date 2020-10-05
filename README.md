@@ -1,22 +1,30 @@
 # Casting Agency App
-Casting Agency is an app that is responsible for creating movies, adding actors and assigning them to those movies. 
-This is my capstone project for the Udacity Full Stack Web Developer nanodegree.
+Casting Agency is an app that is responsible for creating movies, adding actors and assigning them to those movies. 	
+3 different users with different permissions can log into the app and access data accordingly.
 
-Hosted on heroku. [Link](https://vr-casting-agency.herokuapp.com/).
-## Getting Started
 
-### Installing Dependencies
+# Accessing Casting Agency app on the web	
 
-#### PIP Dependencies
+Visit the following URL to see the app in action:	
+* https://vr-casting-agency.herokuapp.com	
+or click [Link](https://vr-casting-agency.herokuapp.com/).	
 
-All dependencies are already listed in the `requirements.txt` file. 
+This app connects to a Postgres server hosted on Heroku. Casting Assistant can only view the Actors and Movies. Executive Producer can view, add and delete but has not edit permission.  Casting Director has all possible rights on Movies and Actors. The credentials for these 3 users are specified bellow:	
 
-```bash
-pip install -r requirements.txt
-```
+Casting Assistant:	
+* email: assistant@assistant.com	
+* password: !!Assistant12	
 
-This will install all of the required packages within the `requirements.txt` file.
+Casting Producer:	
+* email: producer@producer.com	
+* password: !!Producer12	
 
+Casting Director:	
+* email: director@director.com	
+* password: !!Director12	
+
+
+## Getting Started	
 ## Authentication
 ### Setup Auth0
 In order to create 3 different roles that will log into the app, the following configurations were applied:
@@ -43,10 +51,6 @@ In order to create 3 different roles that will log into the app, the following c
         - `get:actors`
         - `get:actor-detail`
         - `post:actors`
-      ```
-      email: gurdisfilea@gmail.com
-      password: !!!!Valerica!!
-      ```
     - Casting Director
       - All permissions a Casting Assistant has and…
       - Add or delete an actor from the database
@@ -60,10 +64,6 @@ In order to create 3 different roles that will log into the app, the following c
         - `post:movie`
         - `patch:movie`
         - `delete:movie`
-      ```
-      email: vrotaru@mastercontrol.com
-      password: !!Password!!
-      ```
     - Executive Producer
       - All permissions a Casting Director has and…
       - Add or delete a movie from the database
@@ -74,10 +74,6 @@ In order to create 3 different roles that will log into the app, the following c
         - `get:movie`
         - `post:movie`
         - `delete:movie`
-      ```
-      email: gurdisvaleriu@gmail.com
-      password: !!!!Password12
-      ```
 7. Test your endpoints with [Postman](https://getpostman.com). 
 
 
