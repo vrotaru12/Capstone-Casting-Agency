@@ -373,7 +373,7 @@ function setInitialFormLoad() {
     document.getElementById('undefined1').remove();
     document.getElementById('LogOutbutton1').remove();
     if(localStorage.token && tokenHasExpired(parseJwt(localStorage.token,1).exp) ===  false){
-      alert('The session has expired. Please Log In again');
+      localStorage.clear();
     }
   }
 }
